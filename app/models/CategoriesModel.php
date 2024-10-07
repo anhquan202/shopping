@@ -1,13 +1,17 @@
 <?php
+require_once __DIR__ . '/../../config/connDatabase.php';
+
 class CategoriesModel
 {
   private $category_id;
   private $category_name;
-
-  public function __construct($category_id, $category_name)
+  private $conn;
+  public function __construct($category_id = null, $category_name = null)
   {
     $this->category_id = $category_id;
     $this->category_name = $category_name;
+    $db = new connDatabase();
+    $this->conn = $db->getConnection();
   }
 
   /**
@@ -45,5 +49,17 @@ class CategoriesModel
     $this->category_name = $category_name;
 
     return $this;
+  }
+
+  //get categories
+  public function getCategories() {
+    $query = 'SELECT * FROM categories';
+    $results = $this->conn->query($query);
+    $categories = [];
+    while ($category = $results->fetch_assoc()){
+      $categories[] = $category;
+    }
+
+    return $categories;
   }
 }

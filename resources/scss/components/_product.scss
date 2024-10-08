@@ -1,0 +1,36 @@
+@import '../components/button';
+@import '../components/flex/flex-column-gap';
+@import '../components/flex/flex-setting';
+
+@mixin product-list($columns: 4, $gap: 30px) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+
+  .product-item {
+    @include flex-column-gap(16px);
+    border-radius: 4px;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+
+    .product-image {
+      @include flex-setting(center, center);
+
+      img {
+        width: 80%;
+        height: auto;
+        padding: 24px 0;
+        margin: 0 auto;
+        object-fit: contain;
+      }
+    }
+
+    .product-information {
+      @include flex-column-gap(8px);
+
+      span {
+        color: $secondary2;
+      }
+    }
+  }
+}

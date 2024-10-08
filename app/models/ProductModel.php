@@ -1,16 +1,20 @@
 <?php
+require_once __DIR__ . '/../../config/connDatabase.php';
 class ProductModel
 {
-  private $product_id, $name, $stock, $price_in, $price_out, $decription, $category_id;
-  public function __construct($product_id, $name, $stock, $price_in, $price_out, $decription, $category_id)
+  private $product_id, $name, $stock, $price_in, $price_out, $description, $category_id;
+  private $conn;
+  public function __construct($product_id = null, $name = null, $stock = null, $price_in = null, $price_out = null, $description = null, $category_id = null)
   {
     $this->product_id = $product_id;
     $this->name = $name;
     $this->stock = $stock;
     $this->price_in = $price_in;
     $this->price_out = $price_out;
-    $this->decription = $decription;
+    $this->description = $description;
     $this->category_id = $category_id;
+    $db = new connDatabase();
+    $this->conn = $db->getConnection();
   }
 
 
@@ -115,21 +119,21 @@ class ProductModel
   }
 
   /**
-   * Get the value of decription
+   * Get the value of description
    */
-  public function getDecription()
+  public function getDescription()
   {
-    return $this->decription;
+    return $this->description;
   }
 
   /**
-   * Set the value of decription
+   * Set the value of description
    *
    * @return  self
    */
-  public function setDecription($decription)
+  public function setDescription($description)
   {
-    $this->decription = $decription;
+    $this->description = $description;
 
     return $this;
   }
@@ -152,5 +156,21 @@ class ProductModel
     $this->category_id = $category_id;
 
     return $this;
+  }
+
+  public function getRandomProducts()
+  {
+    $query = 'select products.product_id, products.name, products.price_out, product_values.value 
+              from products inner join product_values on products.product_id = product_values.product_id 
+              where attribute_id = 18 limit 8;';
+              
+    $result = $this->conn->query($query);
+
+    $products = [];
+    while ($row = $result->fetch_assoc()) {
+      $products[] = $row;
+    }
+
+    return $products;
   }
 }

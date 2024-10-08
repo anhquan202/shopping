@@ -11,8 +11,13 @@ class HomeController{
   public function index() {
     ob_start();
     $categories = $this->categoriesModel->getCategories();
+    $products = $this->getRandomProducts();
     require_once __DIR__ . '/../views/home/index.php';
     $content = ob_get_clean();
     require_once __DIR__ . '/../views/layout/index.php';
+  }
+
+  public function getRandomProducts (){
+    return $this->productModel->getRandomProducts();
   }
 }

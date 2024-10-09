@@ -10,6 +10,9 @@ $urlComponents = parse_url($request);
 $path = isset($urlComponents['path']) ? $urlComponents['path'] : '';
 $queryString = isset($urlComponents['query']) ? $urlComponents['query'] : '';
 
+//lưu biến $path vào session
+$_SESSION['current_path'] = $path;
+
 // Tạo mảng để chứa các query parameters
 $queryParams = [];
 parse_str($queryString, $queryParams);

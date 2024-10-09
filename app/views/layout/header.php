@@ -11,16 +11,28 @@
         <li class="nav-item"><a href="" class="nav-link">Sign Up</a></li>
       </ul>
     </nav>
+
     <div class="actions">
       <form action="" method="post" id="search">
         <input type="text" placeholder="What are you looking for?" />
         <img src="/shopping/assets/icons/icon-search.svg" alt="" srcset="">
       </form>
+
+      <!-- handle show/hide actions ui -->
+      <?php
+      $path = isset($_SESSION['current_path']) ? $_SESSION['current_path'] : '';
+
+      $hiddenPaths = ['signup', 'login'];
+      if (in_array($path,$hiddenPaths)) {
+        echo '';
+      } else {
+      ?>
       <div class="carts">
         <img src="/shopping/assets/icons/icon-wishlist.svg" alt="" srcset="">
         <img src="/shopping/assets/icons/icon-cart.svg" alt="" srcset="">
         <img src="/shopping/assets/icons/icon-user.svg" alt="" srcset="">
       </div>
+      <?php } ?>
     </div>
   </div>
 </header>

@@ -1,5 +1,4 @@
 @import '../components/button';
-@import '../components/flex/flex-column-gap';
 @import '../components/flex/flex-setting';
 
 @mixin product-list($columns: 4, $gap: 30px) {
@@ -8,14 +7,15 @@
   gap: $gap;
 
   .product-item {
-    @include flex-column-gap(16px);
+    position: relative;
+    @include flex-setting(space-between, flex-start, column, 16px);
     border-radius: 4px;
-    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.2);
     padding: 16px;
 
     .product-image {
       @include flex-setting(center, center);
-
+      height: 65%;
       img {
         width: 80%;
         height: auto;
@@ -26,11 +26,51 @@
     }
 
     .product-information {
-      @include flex-column-gap(8px);
+      @include flex-setting(space-between, flex-start, column, 8px);
+      height: 30%;
 
       span {
         color: $secondary2;
       }
+    }
+
+    .wishlist {
+      display: none;
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      right: 16px;
+      top: 16px;
+      transition: 0.5s ease-in;
+      &:hover {
+        .heart-icon{
+          fill: $button2;
+        }
+        top: 24px;
+        width: 32px;
+      }
+    }
+
+    .add-to-cart {
+      padding: 8px;
+      display: none;
+      position: absolute;
+      cursor: pointer;
+      width: 100%;
+      bottom: 10%;
+      left: 0;
+      background-color: rgba($color: $button, $alpha: 0.6);
+      a {
+        text-decoration: none;
+        color: $text;
+      }
+    }
+
+    &:hover {
+      .wishlist, .add-to-cart {
+        @include flex-setting(center, center);
+      }
+      
     }
   }
 }

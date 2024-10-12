@@ -160,10 +160,8 @@ class ProductModel
 
   public function getRandomProducts()
   {
-    $query = 'select products.product_id, products.name, products.price_out, product_values.value 
-              from products inner join product_values on products.product_id = product_values.product_id 
-              where attribute_id = 18 limit 8;';
-              
+    $query = 'select product_id, name, price_out, primary_image from products order by rand() limit 8';
+
     $result = $this->conn->query($query);
 
     $products = [];
@@ -172,5 +170,40 @@ class ProductModel
     }
 
     return $products;
+  }
+
+  public function getPaginatedProducts($limit, $page, $sort)
+  {
+    $offset = ($page - 1) * $limit;
+
+    if ($sort === 'high-to-low') {
+      $sort = 'order by price_out asc';
+    } elseif ($sort === 'low-to-high') {
+      $sort = 'order by price_out desc';
+    } else {
+      $sort = '';
+    }
+
+    $query = "select product_id, name, price_out, primary_image from products $sort limit ? offset ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param('ii', $limit, $offset);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $products = [];
+    while ($row = $result->fetch_assoc()) {
+      $products[] = $row;
+    }
+    $stmt->close();
+    return $products;
+  }
+
+  public function getTotalProducts()
+  {
+    $query = 'select count(*) from products';
+    $result = $this->conn->query($query);
+    $totalProducts = $result->fetch_column();
+
+    return $totalProducts;
   }
 }

@@ -1,0 +1,106 @@
+@import '../components/button';
+@import '../components/flex/flex-column-gap';
+@import '../components/flex/flex-setting';
+
+.overview-product {
+  display: flex;
+  gap: 32px;
+  padding: 32px 0;
+
+  .image-info {
+    @include flex-setting(center, center);
+    width: 50%;
+
+    .image-main {
+      width: 70%;
+      height: auto;
+    }
+
+  }
+
+  .summary-info {
+    @include flex-column-gap(24px);
+    width: 45%;
+
+    .price {
+      @include flex-setting(flex-start, center);
+
+      :first-child {
+        display: block;
+        width: 25%;
+      }
+
+      :last-child {
+        font-weight: 600;
+        color: $secondary2;
+      }
+    }
+
+    .quantity-product {
+      @include flex-setting(flex-start, center);
+
+      .title {
+        width: 25%;
+      }
+
+      .quantity-input {
+        display: flex;
+        align-items: center;
+        width: 124px;
+        height: 100%;
+        border: 1px solid $text1;
+
+        .btn-update {
+          width: 30%;
+          background: inherit;
+          padding: 8px;
+          border: none;
+
+          &.btn-minus {
+            border-right: 1px solid $text1;
+          }
+
+          &.btn-plus {
+            border-left: 1px solid $text1;
+          }
+
+          img {
+            width: 16px;
+            height: 16px;
+          }
+        }
+
+        input[type="number"] {
+          width: 50%;
+          height: 100%;
+          text-align: center;
+          font-size: 16px;
+          border: none;
+        }
+      }
+
+      .stock {
+        padding-left: 20px;
+      }
+    }
+
+    .actions {
+      @include flex-setting(flex-start, center, row, 16px);
+
+      .btn {
+        width: 30%;
+        font-size: 16px;
+
+        &.btn_add-to-cart {
+          @include button($button2, $text, 0 0);
+          padding: 12px 16px;
+        }
+
+        &.btn_buy {
+          @include button(rgba($button, 0.7), $text, 0 0);
+          padding: 12px 16px;
+        }
+      }
+    }
+  }
+}

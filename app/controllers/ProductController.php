@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../models/ProductModel.php';
+require_once __DIR__ . '/../models/eav-product/ProductModel.php';
 class ProductController
 {
   private $productModel;
@@ -34,9 +34,9 @@ class ProductController
     $products = $this->productModel->getPaginatedProducts($limit, $page, $sort);
 
     return [
-      'products' => $products, 
-      'totalPages' => $totalPages, 
-      'pages' => $page, 
+      'products' => $products,
+      'totalPages' => $totalPages,
+      'pages' => $page,
       'sort' => $sort
     ];
   }

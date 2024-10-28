@@ -102,6 +102,23 @@ body {
   align-items: center;
   gap: 16px;
 }
+#header #header-content .actions .carts .counter {
+  position: relative;
+}
+#header #header-content .actions .carts .counter .cart-icon {
+  position: absolute;
+  top: 0;
+  right: -8px;
+}
+#header #header-content .actions .carts .counter .cart-icon .cart-item-count {
+  width: 18px;
+  height: 16px;
+  font-size: 12px;
+  border-radius: 4px;
+  text-align: center;
+  background: #E07575;
+  color: rgba(250, 250, 250, 0.5);
+}
 
 .footer {
   width: 100%;
@@ -659,9 +676,12 @@ body {
 }
 .overview-product .summary-info .quantity-product .quantity-input .btn-update {
   width: 30%;
-  background: inherit;
-  padding: 8px;
   border: none;
+  background-color: inherit;
+  padding: 8px 8px;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
 }
 .overview-product .summary-info .quantity-product .quantity-input .btn-update.btn-minus {
   border-right: 1px solid #7D8184;
@@ -734,4 +754,117 @@ body {
 }
 .detail-product .full-info tbody tr td {
   padding: 16px 0;
+}
+
+.my-carts {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  padding: 32px 0;
+}
+.my-carts .heading-title {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 0;
+  width: 100%;
+  list-style: none;
+  padding: 16px 0;
+  font-weight: 700;
+}
+.my-carts .heading-title :first-child {
+  width: 35%;
+}
+.my-carts #buy-products {
+  width: 100%;
+}
+.my-carts #buy-products .list-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.my-carts #buy-products .list-item .item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  gap: 0;
+  width: 100%;
+  padding: 16px 0;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
+}
+.my-carts #buy-products .list-item .item .name {
+  display: flex;
+  gap: 12px;
+  width: 40%;
+}
+.my-carts #buy-products .list-item .item .name img {
+  width: 124px;
+  height: 124px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.my-carts #buy-products .list-item .item .name span {
+  font-weight: 600;
+}
+.my-carts #buy-products .list-item .item .quantity-buy .quantity-input {
+  display: flex;
+  align-items: center;
+  width: 124px;
+  border: 1px solid #7D8184;
+}
+.my-carts #buy-products .list-item .item .quantity-buy .quantity-input .btn-update {
+  width: 30%;
+  background: inherit;
+  padding: 8px;
+  border: none;
+}
+.my-carts #buy-products .list-item .item .quantity-buy .quantity-input .btn-update.btn-minus {
+  border-right: 1px solid #7D8184;
+}
+.my-carts #buy-products .list-item .item .quantity-buy .quantity-input .btn-update.btn-plus {
+  border-left: 1px solid #7D8184;
+}
+.my-carts #buy-products .list-item .item .quantity-buy .quantity-input .btn-update img {
+  width: 16px;
+  height: 16px;
+}
+.my-carts #buy-products .list-item .item .quantity-buy .quantity-input input[type=number] {
+  width: 50%;
+  height: 100%;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+.my-carts #buy-products .list-item .item .btn-remove {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #FAFAFA;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.my-carts #buy-products .payment {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
+  gap: 32px;
+}
+.my-carts #buy-products .payment span {
+  font-weight: 600;
+}
+.my-carts #buy-products .payment .btn-buy {
+  background-color: #DB4444;
+  color: #FAFAFA;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }/*# sourceMappingURL=app.css.map */

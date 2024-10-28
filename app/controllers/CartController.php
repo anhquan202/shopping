@@ -1,14 +1,16 @@
 <?php
 require_once __DIR__ . '/../models/CartModel.php';
 require_once __DIR__ . '/../models/eav-product/ProductModel.php';
+require_once __DIR__ . '/../models/eav-users/UserModel.php';
 class CartController
 {
-  private $cartModel, $productModel;
+  private $cartModel, $productModel, $userModel;
 
   public function __construct()
   {
     $this->cartModel = new CartModel();
     $this->productModel = new ProductModel();
+    $this->userModel = new UserModel();
   }
 
   public function index()
@@ -24,26 +26,36 @@ class CartController
   public function addToCart()
   {
     try {
+      $is_auth = $this->userModel->is_auth();
+
       $product_id = $_POST['product_id'];
       $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
 
       $product = $this->productModel->getProductById($product_id);
 
-      if ($product) {
-        $this->cartModel->addToCart($product_id, $quantity);
-        $cartItems = $this->cartModel->getCartItems();
-        $totalItems = count($cartItems);
+      if ($is_auth) {
+        if ($product) {
+          $this->cartModel->addToCart($product_id, $quantity);
+          $cartItems = $this->cartModel->getCartItems();
+          $totalItems = count($cartItems);
 
+          header('Content-Type: application/json');
+          echo json_encode([
+            'success' => 200,
+            'message' => 'Added Product Successfully',
+            'count_item' => $totalItems
+          ]);
+        } else {
+          echo json_encode([
+            'success' => 404,
+            'message' => 'Product not found'
+          ]);
+        }
+      } else {
         header('Content-Type: application/json');
         echo json_encode([
-          'success' => 200,
-          'message' => 'Added Product Successfully',
-          'count_item' => $totalItems
-        ]);
-      } else {
-        echo json_encode([
-          'success' => 404,
-          'message' => 'Product not found'
+          'success' => 401,
+          'message' => 'User not authenticated. Please log in.'
         ]);
       }
     } catch (\Throwable $th) {

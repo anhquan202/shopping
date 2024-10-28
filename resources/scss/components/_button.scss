@@ -1,8 +1,8 @@
-@mixin button($bg-color, $text-color, $padding: 10px 20px) {
+@mixin button($bg-color, $text-color, $padding: 10px 20px, $border-radius: 4px) {
   background-color: $bg-color;
   color: $text-color;
   padding: $padding;
   border: none;
-  border-radius: 4px;
+  border-radius: $border-radius;
   cursor: pointer;
 }

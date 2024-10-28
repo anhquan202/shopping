@@ -5,7 +5,7 @@
         <img src="/shopping/assets/images/Exclusive.png" alt="" srcset="">
       </div>
       <ul class="nav">
-        <li class="nav-item"><a href="" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="/shopping" class="nav-link">Home</a></li>
         <li class="nav-item"><a href="" class="nav-link">Contact</a></li>
         <li class="nav-item"><a href="" class="nav-link">About</a></li>
         <li class="nav-item"><a href="" class="nav-link">Sign Up</a></li>
@@ -23,15 +23,25 @@
       $path = isset($_SESSION['current_path']) ? $_SESSION['current_path'] : '';
 
       $hiddenPaths = ['signup', 'login'];
-      if (in_array($path,$hiddenPaths)) {
+      if (in_array($path, $hiddenPaths)) {
         echo '';
       } else {
       ?>
-      <div class="carts">
-        <img src="/shopping/assets/icons/icon-wishlist.svg" alt="" srcset="">
-        <img src="/shopping/assets/icons/icon-cart.svg" alt="" srcset="">
-        <img src="/shopping/assets/icons/icon-user.svg" alt="" srcset="">
-      </div>
+        <div class="carts">
+          <div class="counter">
+            <img src="/shopping/assets/icons/icon-wishlist.svg" alt="" srcset="">
+            <div class="cart-icon">
+              <p class="cart-item-count" id="wishlist">0</p>
+            </div>
+          </div>
+          <a href="cart" class="counter">
+            <img src="/shopping/assets/icons/icon-cart.svg" alt="" srcset="">
+            <div class="cart-icon">
+              <p class="cart-item-count" id="shopping-cart">0</p>
+            </div>
+          </a>
+          <img src="/shopping/assets/icons/icon-user.svg" alt="" srcset="">
+        </div>
       <?php } ?>
     </div>
   </div>

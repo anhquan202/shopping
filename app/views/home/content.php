@@ -35,7 +35,7 @@
       <b class="label-content">Explore Our Products</b>
     </div>
     <nav class="navigation">
-      <a href="" class="btn-nav">View All Products</a>
+      <a href="products" class="btn-nav">View All Products</a>
     </nav>
   </div>
 

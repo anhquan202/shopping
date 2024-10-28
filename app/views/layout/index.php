@@ -17,7 +17,7 @@
   </div>
   <?php require_once 'footer.php'; ?>
 
+  <script src="/shopping/dist/index.js"></script>
 </body>
-<script src="../../../js/app.js"></script>
 
 </html>

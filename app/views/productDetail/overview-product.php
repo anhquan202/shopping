@@ -16,7 +16,7 @@
         <button class="btn-update btn-minus">
           <img src="/shopping/assets/icons/minus-solid.svg" alt="">
         </button>
-        <input type="number" id="quantity" name="quantity" value="1" min="1" max="<?= $productById['stock'] ?>" step="1">
+        <input type="number" class="quantity" name="quantity" value="1" min="1" max="<?= $productById['stock'] ?>" step="1">
         <button class="btn-update btn-plus">
           <img src="/shopping/assets/icons/plus-solid.svg" alt="">
         </button>

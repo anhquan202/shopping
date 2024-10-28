@@ -1,7 +1,7 @@
 @import '../components/product';
+@import '../components/button';
 @import '../components/flex/flex-setting';
 @import '../components/flex/flex-column-gap';
-
 
 @mixin size-color($font-size, $color, $alpha) {
   font-size: $font-size;

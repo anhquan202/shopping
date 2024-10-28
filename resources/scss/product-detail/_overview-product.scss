@@ -52,9 +52,8 @@
 
         .btn-update {
           width: 30%;
-          background: inherit;
-          padding: 8px;
           border: none;
+          @include button(inherit, null, 8px 8px, 0);
 
           &.btn-minus {
             border-right: 1px solid $text1;

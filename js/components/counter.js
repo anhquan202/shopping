@@ -82,7 +82,7 @@ function updatePriceItem(productElement) {
   $(productElement).find('.products-price').html(total.toLocaleString());
 }
 
-function updateTotalPrice() {
+export function updateTotalPrice() {
   var total = 0;
   $('.list-item .item').each(function () {
     var priceText = $(this).find('.products-price').text();

@@ -2,38 +2,20 @@
 require_once __DIR__ . '/../../../config/connDatabase.php';
 class UserModel
 {
-  private $user_id, $name, $email, $password;
+  private $user_id, $full_name, $user_name, $user_email, $password, $oauth_provider, $oauth_id;
   private $conn;
-  public function __construct($user_id = null, $name = null, $email = null, $password = null)
+  public function __construct($user_id = null, $full_name = null, $user_name = null, $user_email = null, $password = null, $oauth_provider = null, $oauth_id = null)
   {
     $this->user_id = $user_id;
-    $this->name = $name;
-    $this->email = $email;
+    $this->full_name = $full_name;
+    $this->user_name = $user_name;
+    $this->user_email = $user_email;
     $this->password = $password;
+    $this->oauth_provider = $oauth_provider;
+    $this->oauth_id = $oauth_id;
     $db = new connDatabase();
     $this->conn = $db->getConnection();
   }
-
-  /**
-   * Get the value of password
-   */
-  public function getPassword()
-  {
-    return $this->password;
-  }
-
-  /**
-   * Set the value of password
-   *
-   * @return  self
-   */
-  public function setPassword($password)
-  {
-    $this->password = password_hash($password, PASSWORD_DEFAULT);;
-
-    return $this;
-  }
-
 
   public function is_auth()
   {

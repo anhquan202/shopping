@@ -8,12 +8,14 @@
     </div>
     <form id="login-form" method="post">
       <div class="form-group">
-        <label for="email-phone">Email or Phone Number</label>
-        <input type="text" placeholder="Email or Phone Number" class="input-field" required>
+        <label for="user_phone">Phone Number *</label>
+        <input type="text" id="user_phone" placeholder="Phone Number" class="input-field" required>
+        <b class="error error-phone"></b>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Password *</label>
         <input type="password" id="password" placeholder="Password" class="input-field" required>
+        <b class="error error-password"></b>
       </div>
       <div class="actions">
         <button type="submit" class="btn-login">Log In</button>

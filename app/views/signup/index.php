@@ -6,33 +6,29 @@
     <div class="heading">
       <p>Sign up to Exclusive</p>
     </div>
-    <form id="signup-form" method="post">
+    <form id="signup-form" autocomplete="on">
       <div class="form-group">
         <label for="full_name">Full Name *</label>
-        <input type="text" id="full_name" placeholder="Full Name" class="input-field" required>
+        <input type="text" id="full_name" name="full_name" placeholder="Full Name" class="input-field">
         <b class="error error-fullname"></b>
       </div>
       <div class="form-group">
         <label for="user_phone">Phone Number *</label>
-        <input type="text" id="user_phone" placeholder="Phone Number" class="input-field" required>
+        <input type="text" id="user_phone" name="user_phone" placeholder="Phone Number" class="input-field">
         <b class="error error-phone"></b>
       </div>
       <div class="form-group">
-        <label for="user_email">Email</label>
-        <input type="email" placeholder="Email" class="input-field">
-      </div>
-      <div class="form-group">
         <label for="password">Password *</label>
-        <input type="password" id="password" placeholder="Password" class="input-field" required>
+        <input type="password" id="password" name="password" placeholder="Password" class="input-field">
         <b class="error error-password"></b>
       </div>
       <div class="form-group">
-        <label for="repeat-password">Repeat Password *</label>
-        <input type="password" id="repeat-password" placeholder="Repeat Password" class="input-field" required>
+        <label for="repeat_password">Repeat Password *</label>
+        <input type="password" id="repeat-password" name="repeat_password" placeholder="Repeat Password" class="input-field">
         <b class="error error-repeat-password"></b>
       </div>
       <div class="actions">
-        <button type="submit" class="btn-signup">Sign Up</button>
+        <button class="btn-signup">Sign Up</button>
       </div>
     </form>
     <div class="redirect-login">

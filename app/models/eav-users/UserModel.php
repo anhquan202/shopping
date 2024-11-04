@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . '/../../../config/connDatabase.php';
+require_once './vendor/autoload.php';
+
+use Firebase\JWT\JWT;
 
 class UserModel
 {
@@ -50,6 +53,70 @@ class UserModel
     }
   }
 
+  public function signin($data)
+  {
+    $user_phone = $data['user_phone'];
+    $password = $data['password'];
+
+    $errors = [];
+    $errorsPhone = $this->validateUserPhone($user_phone);
+    $errorsPassword = $this->validatePassword($password);
+    $errors = array_merge($errors, $errorsPhone, $errorsPassword);
+
+    if (!empty($errors)) {
+      return $errors;
+    }
+
+    if (!$this->isExistUser($user_phone)) {
+      return [
+        'status' => 401,
+        'message' => 'Invalid Credentials'
+      ];
+    } else {
+      $query = 'select * from users where user_phone = ? ';
+      $stmt = $this->conn->prepare($query);
+      $stmt->bind_param('s', $user_phone);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        if (password_verify($password, $user['password'])) {
+          $secret_key = "123451331321";
+          $expiration_time = time() + 3600;
+
+          $payload = [
+            "iat" => time(),
+            "exp" => $expiration_time,
+            "data" => [
+              "user_id" => $user['user_id'],
+              "full_name" => $user['full_name'],
+              "user_phone" => $user['user_phone']
+            ]
+          ];
+
+          $jwt = JWT::encode($payload, $secret_key, 'HS256');
+
+          return [
+            'status' => 200,
+            'token' => $jwt
+          ];
+        } else {
+          return [
+            'status' => 401,
+            'message' => 'Invalid Password'
+          ];
+        }
+      } else {
+        return [
+          'status' => 404,
+          'message' => 'User not found'
+        ];
+      }
+    }
+  }
+
   private function isExistUser($user_phone)
   {
     $checkQuery = 'select * from users WHERE user_phone = ?';
@@ -86,12 +153,12 @@ class UserModel
     return $errors;
   }
 
-  private function validateUserPhone($user_phone)
+  private function validateUserPhone($user_phone, $isRegister = false)
   {
     $errors = [];
     $regex_phone = '/^0\d{9,10}$/';
 
-    if ($this->isExistUser($user_phone)) {
+    if ($isRegister && $this->isExistUser($user_phone)) {
       $errors['user_phone'] = 'Phone Number is unique, please re-input Phone Number';
     } elseif (empty($user_phone)) {
       $errors['user_phone'] = 'Phone Number is required.';
@@ -102,18 +169,17 @@ class UserModel
     return $errors;
   }
 
-  private function validatePassword($password, $repeat_password)
+  private function validatePassword($password, $repeat_password = null)
   {
     $errors = [];
     $regex_password = '/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/';
 
-    if (empty($password) || empty($repeat_password)) {
+    if (empty($password)) {
       $errors['password'] = 'Password is required.';
     } elseif (!preg_match($regex_password, $password)) {
       $errors['password'] = 'Password must be at least 6 characters, and include both letters and numbers.';
     }
-
-    if ($password !== $repeat_password) {
+    if ($repeat_password !== null && $password !== $repeat_password) {
       $errors['repeat_password'] = 'Passwords do not match.';
     }
 

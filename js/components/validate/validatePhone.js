@@ -1,10 +1,7 @@
 import $ from 'jquery';
-const userPhone = $('#user_phone');
-function checkPhone() {
-  return validatePhone();
-}
 
 function validatePhone() {
+  const userPhone = $('#user_phone');
   const regexPhone = /^0\d{9,10}$/;
   const errorElement = userPhone.siblings('.error-phone');
 
@@ -19,4 +16,4 @@ function validatePhone() {
     return true;
   }
 }
-export { checkPhone, validatePhone };
+export { validatePhone };

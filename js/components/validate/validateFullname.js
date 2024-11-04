@@ -1,12 +1,9 @@
 import $ from 'jquery';
 
-const fullName = $('#full_name');
-function checkFullName() {
-  return validateFullName();
-}
-
 function validateFullName() {
   const regexName = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸỳỵỷỹ\s]{2,}$/;
+
+  const fullName = $('#full_name');
   const errorElementFullName = fullName.siblings('.error-fullname');
 
   if (fullName.val().length === 0) {
@@ -21,4 +18,4 @@ function validateFullName() {
   }
 }
 
-export { checkFullName, validateFullName };
+export { validateFullName };

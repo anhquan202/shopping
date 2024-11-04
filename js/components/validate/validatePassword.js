@@ -4,9 +4,6 @@ const password = $('#password');
 const repeatPassword = $('#repeat-password');
 const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
-function checkPassword() {
-  return validatePassword() && validateRepeatPassword();
-}
 function validatePassword() {
   const errorElementPassword = password.siblings('.error-password');
   if (password.val().length === 0) {
@@ -34,4 +31,4 @@ function validateRepeatPassword() {
     return true;
   }
 }
-export { checkPassword, validatePassword, validateRepeatPassword };
+export { validatePassword, validateRepeatPassword };

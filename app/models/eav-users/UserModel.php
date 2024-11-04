@@ -91,7 +91,9 @@ class UserModel
     $errors = [];
     $regex_phone = '/^0\d{9,10}$/';
 
-    if (empty($user_phone)) {
+    if ($this->isExistUser($user_phone)) {
+      $errors['user_phone'] = 'Phone Number is unique, please re-input Phone Number';
+    } elseif (empty($user_phone)) {
       $errors['user_phone'] = 'Phone Number is required.';
     } elseif (!preg_match($regex_phone, $user_phone)) {
       $errors['user_phone'] = 'Phone Number Format is incorrect.';

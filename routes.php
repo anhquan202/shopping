@@ -11,5 +11,6 @@ $routes = [
   'cart/counter-cart' => 'CartController@counterCart',
   'cart/remove-item' => 'CartController@removeItem',
   'cart/get-total-price' => 'CartController@getTotalPrice',
-  'register' => 'AuthController@register'
+  'register' => 'AuthController@register',
+  'signin' => 'AuthController@signin'
 ];

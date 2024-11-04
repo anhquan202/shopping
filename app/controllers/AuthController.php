@@ -63,4 +63,31 @@ class AuthController
       }
     }
   }
+
+  public function signin()
+  {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $user_phone = $_POST['user_phone'];
+      $password = $_POST['password'];
+
+      $data = [
+        'user_phone' => $user_phone,
+        'password' => $password,
+      ];
+
+      $result = $this->userModel->signin($data);
+
+      if (isset($result['status']) && $result['status'] === 200) {
+        $_SESSION['jwt'] = $result['token'];
+
+        echo json_encode([
+          'status' => 200,
+          'message' => 'Sign-in successful',
+          'token' => $result['token']
+        ]);
+      } else {
+        echo json_encode($result);
+      }
+    }
+  }
 }

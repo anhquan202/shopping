@@ -24,6 +24,43 @@ class UserModel
     return isset($_SESSION['user']);
   }
 
+  public function register($data)
+  {
+    $full_name = $data['full_name'];
+    $user_phone = $data['user_phone'];
+    $password = $data['password'];
+
+    $errors = $this->validation($data);
+    if (!empty($errors)) {
+      return $errors;
+    }
+
+    if (!$this->isExistUser($user_phone)) {
+      $hash_password = password_hash($password, PASSWORD_DEFAULT);
+      $query_insert_user = 'insert into users(full_name, user_phone, password) values (?, ?, ?)';
+      $stmt_insert = $this->conn->prepare($query_insert_user);
+      $stmt_insert->bind_param('sss', $full_name, $user_phone, $hash_password);
+      if ($stmt_insert->execute()) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  private function isExistUser($user_phone)
+  {
+    $checkQuery = 'select * from users WHERE user_phone = ?';
+    $stmt = $this->conn->prepare($checkQuery);
+    $stmt->bind_param('s', $user_phone);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    return $result->num_rows > 0;
+  }
+
   private function validation($data)
   {
     $errors = [];

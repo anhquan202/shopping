@@ -6,19 +6,20 @@
     <div class="heading">
       <p>Log in to Exclusive</p>
     </div>
-    <form id="login-form" method="post">
+    <form id="login-form">
+      <div class="error-login" style="color: #DB4444; font-weight: 600"></div>
       <div class="form-group">
         <label for="user_phone">Phone Number *</label>
-        <input type="text" id="user_phone" placeholder="Phone Number" class="input-field" required>
+        <input type="text" id="user_phone" name="user_phone" placeholder="Phone Number" class="input-field" required>
         <b class="error error-phone"></b>
       </div>
       <div class="form-group">
         <label for="password">Password *</label>
-        <input type="password" id="password" placeholder="Password" class="input-field" required>
+        <input type="password" id="password" name="password" placeholder="Password" class="input-field" required>
         <b class="error error-password"></b>
       </div>
       <div class="actions">
-        <button type="submit" class="btn-login">Log In</button>
+        <button class="btn-login">Log In</button>
         <a href="#" class="forgot-password">Forget Password?</a>
       </div>
     </form>

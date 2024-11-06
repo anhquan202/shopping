@@ -8,7 +8,7 @@
         <li class="nav-item"><a href="/shopping" class="nav-link">Home</a></li>
         <li class="nav-item"><a href="" class="nav-link">Contact</a></li>
         <li class="nav-item"><a href="" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="" class="nav-link">Sign Up</a></li>
+        <li class="nav-item"><a href="signup" class="nav-link">Sign Up</a></li>
       </ul>
     </nav>
 
@@ -28,19 +28,30 @@
       } else {
       ?>
         <div class="carts">
-          <div class="counter">
+          <a class="counter">
             <img src="/shopping/assets/icons/icon-wishlist.svg" alt="" srcset="">
             <div class="cart-icon">
               <p class="cart-item-count" id="wishlist">0</p>
             </div>
-          </div>
+          </a>
           <a href="cart" class="counter">
             <img src="/shopping/assets/icons/icon-cart.svg" alt="" srcset="">
             <div class="cart-icon">
               <p class="cart-item-count" id="shopping-cart">0</p>
             </div>
           </a>
-          <img src="/shopping/assets/icons/icon-user.svg" alt="" srcset="">
+          <div class="user-info">
+            <div class="user-display">
+              <img src="/shopping/assets/icons/icon-user.svg" alt="">
+              <span class="user-name">
+                Name user
+              </span>
+            </div>
+            <div class="user-dropdown">
+              <a href="#">Profile</a>
+              <a href="#">Logout</a>
+            </div>
+          </div>
         </div>
       <?php } ?>
     </div>

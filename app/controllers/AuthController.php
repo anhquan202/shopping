@@ -43,15 +43,14 @@ class AuthController
 
       $result = $this->userModel->register($data);
 
-      if ($result === true) {
-        $_SESSION['user'] = [
-          'full_name' => $full_name,
-          'user_phone' => $user_phone,
-        ];
+      if (isset($result['status']) && $result['status'] === 200) {
+        $_SESSION['jwt'] = $result['token'];
+
         header('Content-Type: application/json');
         echo json_encode([
           'success' => 201,
           'message' => 'Register successfully',
+          'token' => $result['token']
         ]);
       } else {
         header('Content-Type: application/json');

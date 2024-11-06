@@ -21,8 +21,8 @@ function signin() {
         if (response.status === 200) {
           alert(response.message);
           const token = response.token;
-          sessionStorage.setItem('authToken', token);
-          window.location.href = '/';
+          localStorage.setItem('authToken', token);
+          window.location.href = '/shopping';
         } else {
           if (response.user_phone) {
             $('.error-phone').text(response.user_phone);

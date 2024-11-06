@@ -18,8 +18,10 @@ function register() {
       processData: false,
       success: function (response) {
         if (response.success === 201) {
+          const token = response.token;
+          localStorage.setItem('authToken', token);
           alert(response.message);
-          window.location.href = document.referrer || '';
+          window.location.href = '/shopping';
         } else {
           console.log('unsuccess');
           displayErrorFromApi(response.errors);

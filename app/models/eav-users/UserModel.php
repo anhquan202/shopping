@@ -1,14 +1,12 @@
 <?php
 require_once __DIR__ . '/../../../config/connDatabase.php';
-require_once './vendor/autoload.php';
-
-use Firebase\JWT\JWT;
+require_once __DIR__ . '/../JWTModel.php';
 
 class UserModel
 {
   private $user_id, $full_name, $user_name, $user_email, $password, $oauth_provider, $oauth_id;
   private $conn;
-
+  private $jwtModel;
   public function __construct($user_id = null, $full_name = null, $user_name = null, $user_email = null, $password = null, $oauth_provider = null, $oauth_id = null)
   {
     $this->user_id = $user_id;
@@ -20,11 +18,12 @@ class UserModel
     $this->oauth_id = $oauth_id;
     $db = new connDatabase();
     $this->conn = $db->getConnection();
+    $this->jwtModel = new JWTModel();
   }
 
   public function is_auth()
   {
-    return isset($_SESSION['user']);
+    return isset($_SESSION['jwt']);
   }
 
   public function register($data)
@@ -44,12 +43,18 @@ class UserModel
       $stmt_insert = $this->conn->prepare($query_insert_user);
       $stmt_insert->bind_param('sss', $full_name, $user_phone, $hash_password);
       if ($stmt_insert->execute()) {
-        return true;
-      } else {
-        return false;
+        $data = [
+          'full_name' => $full_name,
+          'user_phone' => $user_phone
+        ];
+
+        $jwt = $this->jwtModel->encodeToken($data);
+        return [
+          'status' => 200,
+          'message' => 'Register successful',
+          'token' => $jwt
+        ];
       }
-    } else {
-      return false;
     }
   }
 
@@ -65,13 +70,6 @@ class UserModel
 
     if (!empty($errors)) {
       return $errors;
-    }
-
-    if (!$this->isExistUser($user_phone)) {
-      return [
-        'status' => 401,
-        'message' => 'Invalid Credentials'
-      ];
     } else {
       $query = 'select * from users where user_phone = ? ';
       $stmt = $this->conn->prepare($query);
@@ -83,21 +81,12 @@ class UserModel
         $user = $result->fetch_assoc();
 
         if (password_verify($password, $user['password'])) {
-          $secret_key = "123451331321";
-          $expiration_time = time() + 3600;
-
-          $payload = [
-            "iat" => time(),
-            "exp" => $expiration_time,
-            "data" => [
-              "user_id" => $user['user_id'],
-              "full_name" => $user['full_name'],
-              "user_phone" => $user['user_phone']
-            ]
+          $data = [
+            "user_id" => $user['user_id'],
+            "full_name" => $user['full_name'],
           ];
 
-          $jwt = JWT::encode($payload, $secret_key, 'HS256');
-
+          $jwt = $this->jwtModel->encodeToken($data);
           return [
             'status' => 200,
             'token' => $jwt
@@ -111,7 +100,7 @@ class UserModel
       } else {
         return [
           'status' => 404,
-          'message' => 'User not found'
+          'message' => 'Invalid Credentials'
         ];
       }
     }

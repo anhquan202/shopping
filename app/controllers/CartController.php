@@ -26,36 +26,27 @@ class CartController
   public function addToCart()
   {
     try {
-      $is_auth = $this->userModel->is_auth();
 
       $product_id = $_POST['product_id'];
       $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
 
       $product = $this->productModel->getProductById($product_id);
 
-      if ($is_auth) {
-        if ($product) {
-          $this->cartModel->addToCart($product_id, $quantity);
-          $cartItems = $this->cartModel->getCartItems();
-          $totalItems = count($cartItems);
+      if ($product) {
+        $this->cartModel->addToCart($product_id, $quantity);
+        $cartItems = $this->cartModel->getCartItems();
+        $totalItems = count($cartItems);
 
-          header('Content-Type: application/json');
-          echo json_encode([
-            'success' => 200,
-            'message' => 'Added Product Successfully',
-            'count_item' => $totalItems
-          ]);
-        } else {
-          echo json_encode([
-            'success' => 404,
-            'message' => 'Product not found'
-          ]);
-        }
-      } else {
         header('Content-Type: application/json');
         echo json_encode([
-          'success' => 401,
-          'message' => 'User not authenticated. Please log in.'
+          'success' => 200,
+          'message' => 'Added Product Successfully',
+          'count_item' => $totalItems
+        ]);
+      } else {
+        echo json_encode([
+          'success' => 404,
+          'message' => 'Product not found'
         ]);
       }
     } catch (\Throwable $th) {

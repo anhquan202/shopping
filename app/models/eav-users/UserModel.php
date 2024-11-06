@@ -21,11 +21,6 @@ class UserModel
     $this->jwtModel = new JWTModel();
   }
 
-  public function is_auth()
-  {
-    return isset($_SESSION['jwt']);
-  }
-
   public function register($data)
   {
     $full_name = $data['full_name'];

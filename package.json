@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "jquery": "^3.7.1",
+    "jwt-decode": "^4.0.0",
     "parcel": "^2.12.0"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.31"
+    "@types/jquery": "^3.5.31",
+    "process": "^0.11.10"
   }
 }

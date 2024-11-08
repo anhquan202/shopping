@@ -1,0 +1,109 @@
+@import '../components/button';
+@import '../components/flex/flex-setting';
+@import '../components/flex/flex-column-gap';
+
+.my-carts {
+  @include flex-setting(space-between, flex-start, column, 32px);
+  width: 100%;
+  padding: 32px 0;
+
+  .heading-title {
+    @include flex-setting(space-around, flex-start);
+    width: 100%;
+    list-style: none;
+    padding: 16px 0;
+    font-weight: 700;
+
+    :first-child {
+      width: 35%;
+    }
+  }
+
+  #buy-products {
+    width: 100%;
+
+    .list-item {
+      width: 100%;
+      @include flex-column-gap(32px);
+
+      .item {
+        @include flex-setting(space-around, center);
+        width: 100%;
+        padding: 16px 0;
+        box-shadow: 0 0 4px 1px rgba($button, 0.4);
+
+        .name {
+          display: flex;
+          gap: 12px;
+          width: 40%;
+
+          img {
+            width: 124px;
+            height: 124px;
+            object-fit: contain;
+          }
+
+          span {
+            font-weight: 600;
+          }
+        }
+
+        .quantity-buy {
+          .quantity-input {
+            display: flex;
+            align-items: center;
+            width: 124px;
+            border: 1px solid $text1;
+
+            .btn-update {
+              width: 30%;
+              background: inherit;
+              padding: 8px;
+              border: none;
+
+              &.btn-minus {
+                border-right: 1px solid $text1;
+              }
+
+              &.btn-plus {
+                border-left: 1px solid $text1;
+              }
+
+              img {
+                width: 16px;
+                height: 16px;
+              }
+            }
+
+            input[type="number"] {
+              width: 50%;
+              height: 100%;
+              text-align: center;
+              font-size: 16px;
+              border: none;
+              outline: none;
+            }
+          }
+        }
+
+        .btn-remove {
+          @include button(rgba($button, 0.3), $text);
+        }
+      }
+
+    }
+
+    .payment {
+      @include flex-setting(flex-end, center, row, 32px);
+
+      span {
+        font-weight: 600;
+      }
+
+      .btn-buy {
+        @include button($button2, $text);
+      }
+    }
+  }
+
+}

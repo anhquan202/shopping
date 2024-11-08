@@ -1,0 +1,12 @@
+@import '../components/product';
+@import '../components/arrange';
+@import '../components/pagination';
+#search-section{
+  @include arrange-product();
+}
+.product-list {
+  @include product-list();
+}
+.pagination {
+  @include pagination();
+}

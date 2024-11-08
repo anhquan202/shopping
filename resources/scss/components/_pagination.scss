@@ -1,0 +1,32 @@
+@import '../components/flex/flex-setting';
+@mixin pagination() {
+  @include flex-setting(center, center, row, 16px);
+  padding: 12px;
+  list-style: none;
+  a {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+      background-color: #007bff;
+      color: white;
+      border: 1px solid #007bff;
+    }
+
+    &.active {
+      background-color: #007bff;
+      color: white;
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+  }
+}

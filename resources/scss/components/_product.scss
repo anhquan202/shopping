@@ -1,0 +1,59 @@
+@import '../components/flex/flex-setting';
+
+@mixin product-list($columns: 4, $gap: 30px) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+
+  .product-item {
+    position: relative;
+    @include flex-setting(space-between, flex-start, column, 16px);
+    border-radius: 4px;
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+
+    .product-image {
+      @include flex-setting(center, center);
+      height: 65%;
+      img {
+        width: 80%;
+        height: auto;
+        padding: 24px 0;
+        margin: 0 auto;
+        object-fit: contain;
+      }
+    }
+
+    .product-information {
+      @include flex-setting(space-between, flex-start, column, 8px);
+      height: 30%;
+
+      span {
+        color: $secondary2;
+      }
+    }
+
+    .wishlist {
+      display: none;
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      right: 16px;
+      top: 16px;
+      transition: 0.5s ease-in;
+      &:hover {
+        .heart-icon{
+          fill: $button2;
+        }
+        top: 24px;
+        width: 32px;
+      }
+    }
+    &:hover {
+      .wishlist{
+        @include flex-setting(center, center);
+      }
+      
+    }
+  }
+}

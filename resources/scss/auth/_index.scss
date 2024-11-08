@@ -1,0 +1,129 @@
+@import '../components/flex/flex-setting';
+@import '../components/flex/flex-column-gap';
+@import '../components/button';
+
+#login,
+#signup {
+  @include flex-setting(space-between, center);
+  width: calc(100% + 135px);
+  height: 100%;
+  margin-left: -135px;
+
+  .background-auth {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .auth-container {
+    @include flex-column-gap(36px);
+    width: 370px;
+
+    .heading {
+      p {
+        &:first-child {
+          font-size: 32px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    #login-form,
+    #signup-form {
+      @include flex-column-gap(36px);
+      font-size: 16px;
+
+      .form-group {
+        @include flex-column-gap(8px);
+        position: relative;
+
+        label {
+          visibility: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          color: $button2;
+
+          &.visible {
+            visibility: visible;
+            top: -24px;
+            left: 0;
+            font-weight: 600;
+          }
+        }
+
+        .input-field {
+          height: 32px;
+          font-size: inherit;
+          border: none;
+          outline: none;
+          border-bottom: 1px solid rgba($color: $text1, $alpha: 0.4);
+        }
+
+        .error {
+          color: $button2;
+          font-size: 12px;
+        }
+      }
+
+      .actions {
+        @include flex-setting(space-between, center);
+
+        .btn-login,
+        .btn-signup {
+          @include button($button2, $text);
+          font-size: inherit;
+
+        }
+
+        .btn-login {
+          width: 45%;
+        }
+
+        .btn-signup {
+          width: 100%;
+        }
+
+        .forgot-password {
+          text-decoration: none;
+          font-size: inherit;
+          color: $secondary2;
+        }
+      }
+    }
+
+    .oauth-actions {
+      @include flex-setting(flex-start, center, column, 16px);
+
+      .oauth-buttons {
+        @include flex-setting(space-between, center);
+        width: 100%;
+
+        .btn-facebook,
+        .btn-google {
+          @include button($bg, $text2, 8px 16px);
+          @include flex-setting(center, center, row, 16px);
+          width: 46%;
+          border: 1px solid rgba($color: $button, $alpha: 0.3);
+
+          .icon-auth {
+            width: 36px;
+            height: 36px;
+          }
+        }
+      }
+    }
+
+    .redirect-signup,
+    .redirect-login {
+      @include flex-setting(center, center, row, 8px);
+
+      a[href="signup"],
+      a[href="login"] {
+        color: $secondary2;
+        font-weight: 600;
+      }
+    }
+  }
+}

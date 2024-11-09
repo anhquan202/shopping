@@ -48,13 +48,20 @@ class AuthController
       $result = $this->userModel->register($data);
 
       if (isset($result['status']) && $result['status'] === 200) {
-        $_SESSION['jwt'] = $result['token'];
+        setcookie(
+          'auth_token',
+          $result['token'],
+          time() + 3600,
+          '/',
+          '',
+          true,
+          true
+        );
 
         header('Content-Type: application/json');
         echo json_encode([
           'success' => 201,
           'message' => 'Register successfully',
-          'token' => $result['token']
         ]);
       } else {
         header('Content-Type: application/json');
@@ -81,12 +88,20 @@ class AuthController
       $result = $this->userModel->signin($data);
 
       if (isset($result['status']) && $result['status'] === 200) {
-        $_SESSION['jwt'] = $result['token'];
+        setcookie(
+          'auth_token',
+          $result['token'],
+          time() + 3600,
+          '/',
+          '',
+          true,
+          true
+        );
 
+        header('Content-Type: application/json');
         echo json_encode([
-          'status' => 200,
-          'message' => 'Sign-in successful',
-          'token' => $result['token']
+          'success' => 201,
+          'message' => 'Register successfully',
         ]);
       } else {
         echo json_encode($result);
@@ -125,9 +140,17 @@ class AuthController
 
       $result = $this->userModel->authWithGoogle($data);
       if (isset($result['status']) && $result['status'] === 200) {
-        return [
-          'jwt' => $result['token']
-        ];
+        setcookie(
+          'auth_token',
+          $result['token'],
+          time() + 3600,
+          '/',
+          '',
+          true,
+          true
+        );
+        header('Location: /shopping');
+        exit();
       }
     } else {
       $authUrl = $client->createAuthUrl();

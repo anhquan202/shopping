@@ -6,6 +6,7 @@ class UserModel
   private $user_id, $full_name, $user_name, $user_email, $password, $oauth_provider, $oauth_id, $avatar;
   private $conn;
   private $jwtModel;
+
   public function __construct($user_id = null, $full_name = null, $user_name = null, $user_email = null, $password = null, $oauth_provider = null, $oauth_id = null, $avatar = null)
   {
     $this->user_id = $user_id;
@@ -46,7 +47,6 @@ class UserModel
         $jwt = $this->jwtModel->encodeToken($data);
         return [
           'status' => 200,
-          'message' => 'Register successful',
           'token' => $jwt
         ];
       }
@@ -79,6 +79,8 @@ class UserModel
           $data = [
             "user_id" => $user['user_id'],
             "full_name" => $user['full_name'],
+            'user_email' => $user['user_email'],
+            'avatar' => $user['avatar'],
           ];
 
           $jwt = $this->jwtModel->encodeToken($data);
@@ -120,7 +122,6 @@ class UserModel
       $jwt = $this->jwtModel->encodeToken($payload);
       return [
         'status' => 200,
-        'message' => 'Successful Authentication',
         'token' => $jwt
       ];
     } else {
@@ -148,7 +149,6 @@ class UserModel
 
         return [
           'status' => 200,
-          'message' => 'Successful Authentication',
           'token' => $jwt
         ];
       } else {
@@ -160,6 +160,7 @@ class UserModel
       }
     }
   }
+
   private function isExistUser($user_phone)
   {
     $checkQuery = 'select * from users WHERE user_phone = ?';

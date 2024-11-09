@@ -26,28 +26,30 @@ class CartController
   public function addToCart()
   {
     try {
-
-      $product_id = $_POST['product_id'];
-      $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
-
-      $product = $this->productModel->getProductById($product_id);
-
-      if ($product) {
-        $this->cartModel->addToCart($product_id, $quantity);
-        $cartItems = $this->cartModel->getCartItems();
-        $totalItems = count($cartItems);
-
+      if (!isset($_COOKIE['auth_token'])) {
         header('Content-Type: application/json');
         echo json_encode([
-          'success' => 200,
-          'message' => 'Added Product Successfully',
-          'count_item' => $totalItems
+          'success' => 403,
+          'message' => 'You need to register or login!'
         ]);
       } else {
-        echo json_encode([
-          'success' => 404,
-          'message' => 'Product not found'
-        ]);
+        $product_id = $_POST['product_id'];
+        $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
+
+        $product = $this->productModel->getProductById($product_id);
+
+        if ($product) {
+          $this->cartModel->addToCart($product_id, $quantity);
+          $cartItems = $this->cartModel->getCartItems();
+          $totalItems = count($cartItems);
+
+          header('Content-Type: application/json');
+          echo json_encode([
+            'success' => 200,
+            'message' => 'Added Product Successfully',
+            'count_item' => $totalItems
+          ]);
+        }
       }
     } catch (\Throwable $th) {
       header('Content-Type: application/json');

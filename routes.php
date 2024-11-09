@@ -13,5 +13,6 @@ $routes = [
   'cart/get-total-price' => 'CartController@getTotalPrice',
   'register' => 'AuthController@register',
   'signin' => 'AuthController@signin',
-  'login/redirect-google' => 'AuthController@authWithGoogle'
+  'login/redirect-google' => 'AuthController@authWithGoogle',
+  'get-user-info' => 'UserController@getUserInfo'
 ];

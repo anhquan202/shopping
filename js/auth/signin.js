@@ -15,13 +15,8 @@ function signin() {
       contentType: false,
       processData: false,
       success: function (response) {
-        if (typeof response === "string") {
-          response = JSON.parse(response);
-        }
-        if (response.status === 200) {
+        if (response.status === 201) {
           alert(response.message);
-          const token = response.token;
-          localStorage.setItem('authToken', token);
           window.location.href = '/shopping';
         } else {
           if (response.user_phone) {

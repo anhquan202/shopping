@@ -100,10 +100,11 @@ class AuthController
 
         header('Content-Type: application/json');
         echo json_encode([
-          'success' => 201,
+          'status' => 201,
           'message' => 'Register successfully',
         ]);
       } else {
+        header('Content-Type: application/json');
         echo json_encode($result);
       }
     }

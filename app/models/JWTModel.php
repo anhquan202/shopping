@@ -2,6 +2,7 @@
 require_once './vendor/autoload.php';
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class JWTModel
 {
@@ -19,5 +20,9 @@ class JWTModel
       "data" => $data
     ];
     return JWT::encode($payload, $this->secret_key, 'HS256');
+  }
+  public function decodeToken($token)
+  {
+    return JWT::decode($token, new Key($this->secret_key, 'HS256'));
   }
 }

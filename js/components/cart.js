@@ -9,35 +9,29 @@ function handleCart() {
 function addToCart() {
   $('.btn_add-to-cart').on('click', function (e) {
     e.preventDefault();
-    if (!localStorage.getItem('authToken')) {
-      alert('You need to register or login!');
-      window.location.href = 'signup'
-    }
-    else {
-      var productId = $(this).data('product-id');
-      var quantity = $('.quantity').val();
+    var productId = $(this).data('product-id');
+    var quantity = $('.quantity').val();
 
-      $.ajax({
-        method: "POST",
-        url: 'cart/add-to-cart',
-        data: {
-          product_id: productId,
-          quantity: quantity
-        },
-        success: function (response) {
-          if (response.success === 200) {
-            alert(response.message);
-            updateCartCount();
-          } else if (response.success === 401) {
-            alert(response.message);
-            window.location.href = 'login';
-          }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
+    $.ajax({
+      method: "POST",
+      url: 'cart/add-to-cart',
+      data: {
+        product_id: productId,
+        quantity: quantity
+      },
+      success: function (response) {
+        if (response.success === 200) {
+          alert(response.message);
+          updateCartCount();
+        } else {
+          alert(response.message);
+          window.location.href = 'login';
         }
-      })
-    }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
+      }
+    })
   })
 }
 

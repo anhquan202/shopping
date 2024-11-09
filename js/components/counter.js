@@ -88,21 +88,25 @@ export function updateTotalPrice() {
     var priceText = $(this).find('.products-price').text();
     var priceItem = parseFloat(priceText.replace(/,/g, ''));
     total += priceItem;
-    console.log(total);
-
   });
 
   $('.purchase-final').html(total.toLocaleString());
 }
 
 function handleQuantityChange() {
-  $('.quantity').on('change', function () {
-    var quantityInput = $(this).closest('.quantity-input').find('.quantity');
-    var quantity = parseInt(quantityInput.val());
-    var product = $(this).closest('.item');
+  const stock = parseInt($('.quantity').attr('max'));
+
+  $('.quantity').on('change blur', function () {
+    const quantityInput = $(this).closest('.quantity-input').find('.quantity');
+    const product = $(this).closest('.item');
+
+    let quantity = parseInt(quantityInput.val());
 
     if (isNaN(quantity)) {
-      $(this).val($(this).attr('min'));
+      $(this).val($(this).attr('min')); c
+    }
+    if (quantity > stock) {
+      $(this).val($(this).attr('max'));
     }
     updatePriceItem(product);
     updateTotalPrice();

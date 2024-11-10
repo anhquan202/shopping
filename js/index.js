@@ -6,7 +6,7 @@ import counter from './components/counter';
 import showHideLabel from './components/showHideLabel';
 import register from './auth/register';
 import signin from './auth/signin';
-import { getInforUser } from './components/userTokenHandler';
+import getUserInfoFromToken from './components/getUserInfoFromToken';
 $(function () {
   automaticSlide();
 
@@ -22,5 +22,5 @@ $(function () {
 
   signin();
 
-  getInforUser();
+  getUserInfoFromToken();
 });

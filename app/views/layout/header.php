@@ -42,7 +42,7 @@
           </a>
           <div class="user-info">
             <div class="user-display">
-              <img src="/shopping/assets/icons/icon-user.svg" alt="">
+              <img id="user-icon" src="/shopping/assets/icons/icon-user.svg" alt="">
               <span class="user-name">
                 Name user
               </span>

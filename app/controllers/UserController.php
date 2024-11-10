@@ -13,8 +13,14 @@ class UserController
       $jwt_token = $_COOKIE['auth_token'];
       try {
         $user = $this->jwtModel->decodeToken($jwt_token);
-        echo json_encode($user);
+
+        header('Content-Type: application/json');
+        echo json_encode([
+          'status' => 201,
+          'user' => $user
+        ]);
       } catch (\Throwable $th) {
+        header('Content-Type: application/json');
         echo json_encode([
           'message' => $th->getMessage()
         ]);

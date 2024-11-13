@@ -40,6 +40,7 @@ class UserModel
       $stmt_insert->bind_param('sss', $full_name, $user_phone, $hash_password);
       if ($stmt_insert->execute()) {
         $data = [
+          'user_id' => $this->conn->insert_id,
           'full_name' => $full_name,
           'user_phone' => $user_phone
         ];
@@ -49,7 +50,17 @@ class UserModel
           'status' => 200,
           'token' => $jwt
         ];
+      } else {
+        return [
+          'status' => 500,
+          'message' => 'User registration failed. Please try again.'
+        ];
       }
+    } else {
+      return [
+        'status' => 400,
+        'message' => 'User already exists.'
+      ];
     }
   }
 

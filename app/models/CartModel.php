@@ -6,13 +6,12 @@ class CartModel
   public function __construct()
   {
     $this->productModel = new ProductModel();
-  }
-  public function addToCart($product_id, $quantity)
-  {
     if (!isset($_SESSION['cart'])) {
       $_SESSION['cart'] = [];
     }
-
+  }
+  public function addToCart($product_id, $quantity)
+  {
     if (isset($_SESSION['cart'][$product_id])) {
       $_SESSION['cart'][$product_id]['quantity'] += $quantity;
     } else {
@@ -25,12 +24,12 @@ class CartModel
 
   public function getCartItems()
   {
-    return isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+    return  $_SESSION['cart'];
   }
 
   public function removeItem($product_id)
   {
-    if (isset($_SESSION['cart']) && $_SESSION['cart'][$product_id]) {
+    if ($_SESSION['cart'][$product_id]) {
       unset($_SESSION['cart'][$product_id]);
       return true;
     } else {

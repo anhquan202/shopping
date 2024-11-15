@@ -1,0 +1,111 @@
+@import '../components/flex/flex-column-gap';
+@import '../components/flex/flex-setting';
+@import '../components/button';
+
+#checkout {
+  @include flex-setting(space-between);
+
+  .billing-details {
+    @include flex-column-gap(32px);
+
+    .info-user {
+      @include flex-column-gap(32px);
+
+      .form-group {
+        @include flex-column-gap(8px);
+        position: relative;
+
+        label {
+          visibility: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          color: $button2;
+
+          &.visible {
+            visibility: visible;
+            top: -24px;
+            left: 0;
+            font-weight: 600;
+          }
+        }
+
+        .input-field {
+          height: 32px;
+          font-size: inherit;
+          border: none;
+          outline: none;
+          border-bottom: 1px solid rgba($color: $text1, $alpha: 0.4);
+        }
+
+        .suggestions {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          max-height: 200px;
+          overflow-y: auto;
+          z-index: 1000;
+
+          .options {
+            @include flex-setting(flex-start, center);
+            padding-top: 12px;
+
+            .btn-select {
+              @include button($text1, $text, 8px 12px, 0);
+              width: calc(100% / 3);
+              text-align: center;
+            }
+          }
+        }
+
+        .error {
+          color: $button2;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .order-summary {
+    @include flex-column-gap(32px);
+    width: 45%;
+
+    .order-items {
+      @include flex-column-gap(16px);
+
+      .item {
+        @include flex-setting(space-around, flex-start);
+
+        img {
+          width: 50px;
+          height: 50px;
+        }
+
+        .name {
+          width: 200px;
+        }
+      }
+    }
+
+    .order-totals {
+      @include flex-setting(center, flex-end, column, 12px);
+    }
+
+    .payment-options {
+      @include flex-setting(flex-start, center, row, 16px);
+
+      label {
+        @include flex-setting(center, center, row, 8px);
+
+        .icon-payment {
+          width: 80px;
+        }
+      }
+    }
+  }
+}

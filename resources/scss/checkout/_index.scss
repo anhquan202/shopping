@@ -40,25 +40,56 @@
         }
 
         .suggestions {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          max-height: 200px;
-          overflow-y: auto;
-          z-index: 1000;
+          position: relative;
+          border: 1px solid rgba($color: $text1, $alpha: 0.6);
+          border-radius: 4px;
 
           .options {
             @include flex-setting(flex-start, center);
-            padding-top: 12px;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            border: 1px solid rgba($color: $text1, $alpha: 0.6);
 
             .btn-select {
-              @include button($text1, $text, 8px 12px, 0);
+              @include button(rgba($secondary, 0.4), $text2, 8px 12px, 0);
               width: calc(100% / 3);
               text-align: center;
+              position: relative;
+              font-weight: 700;
+
+              &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                transform: scaleX(0);
+                transform-origin: bottom right;
+                transition: transform 0.3s ease;
+              }
+
+              &.active {
+                color: $secondary2;
+
+                &::after {
+                  height: 2px;
+                  background-color: $secondary2;
+                  transform: scale(1);
+                  transform-origin: bottom left;
+                }
+              }
+            }
+          }
+
+          .list-address {
+            padding: 0 12px;
+            list-style: none;
+            max-height: 230px;
+            overflow-y: auto;
+
+            li {
+              padding: 12px 0;
             }
           }
         }

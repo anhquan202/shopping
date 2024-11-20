@@ -18,7 +18,7 @@
         <input type="text" id="address" name="address" class="input-field" placeholder="Receiver Address" required>
         <div id="suggestions-list" class="suggestions">
           <div class="options">
-            <div id="province" class="btn-select">Province</div>
+            <div id="province" class="btn-select active">Province</div>
             <div id="district" class="btn-select">District</div>
             <div id="ward" class="btn-select">Ward</div>
           </div>

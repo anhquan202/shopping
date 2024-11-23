@@ -88,8 +88,9 @@ class UserModel
 
         if (password_verify($password, $user['password'])) {
           $data = [
-            "user_id" => $user['user_id'],
-            "full_name" => $user['full_name'],
+            'user_id' => $user['user_id'],
+            'user_phone' => $user['user_phone'],
+            'full_name' => $user['full_name'],
             'user_email' => $user['user_email'],
             'avatar' => $user['avatar'],
           ];
@@ -124,6 +125,7 @@ class UserModel
     if ($result->num_rows > 0) {
       $user = $result->fetch_assoc();
       $payload = [
+        'user_id' => $user['user_id'],
         'oauth_id' => $user['oauth_id'],
         'full_name' => $user['full_name'],
         'user_email' => $user['user_email'],
@@ -149,6 +151,7 @@ class UserModel
 
       if ($stmt_insert_user->execute()) {
         $payload = [
+          'user_id' => $this->conn->insert_id,
           'oauth_id' => $data['oauth_id'],
           'full_name' => $data['full_name'],
           'user_email' => $data['user_email'],

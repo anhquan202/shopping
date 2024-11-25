@@ -2,15 +2,17 @@
 require_once __DIR__ . '/../models/CartModel.php';
 require_once __DIR__ . '/../models/eav-product/ProductModel.php';
 require_once __DIR__ . '/../models/eav-users/UserModel.php';
+require_once __DIR__ . '/../models/JWTModel.php';
 class CartController
 {
-  private $cartModel, $productModel, $userModel;
+  private $cartModel, $productModel, $userModel, $jwtModel;
 
   public function __construct()
   {
     $this->cartModel = new CartModel();
     $this->productModel = new ProductModel();
     $this->userModel = new UserModel();
+    $this->jwtModel = new JWTModel();
   }
 
   public function index()
@@ -33,14 +35,14 @@ class CartController
           'message' => 'You need to register or login!'
         ]);
       } else {
+        $user_id = $this->getUserId();
         $product_id = $_POST['product_id'];
         $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
-
         $product = $this->productModel->getProductById($product_id);
 
         if ($product) {
-          $this->cartModel->addToCart($product_id, $quantity);
-          $cartItems = $this->cartModel->getCartItems();
+          $this->cartModel->addToCart($user_id, $product_id, $quantity);
+          $cartItems = $this->cartModel->getCartItems($user_id);
           $totalItems = count($cartItems);
 
           header('Content-Type: application/json');
@@ -62,7 +64,8 @@ class CartController
 
   public function getCart()
   {
-    $cartItems = $this->cartModel->getCartItems();
+    $user_id = $this->getUserId();
+    $cartItems = $this->cartModel->getCartItems($user_id);
     $products = [];
 
     foreach ($cartItems as $item) {
@@ -78,7 +81,8 @@ class CartController
 
   public function counterCart()
   {
-    $cart = $this->cartModel->getCartItems();
+    $user_id = $this->getUserId();
+    $cart = $this->cartModel->getCartItems($user_id);
     $total = count($cart);
     header('Content-Type: application/json');
     echo json_encode([
@@ -100,7 +104,9 @@ class CartController
 
     header('Content-Type: application/json');
     try {
-      $is_success = $this->cartModel->removeItem($product_id);
+      $user_id = $this->getUserId();
+      print_r($user_id);
+      $is_success = $this->cartModel->removeItem($user_id, $product_id);
       if ($is_success) {
         echo json_encode([
           'success' => 200,
@@ -112,6 +118,16 @@ class CartController
         'success' => 500,
         'message' => $th->getMessage()
       ]);
+    }
+  }
+
+  //decode jwt_token to get user_id
+  private function getUserId()
+  {
+    if (isset($_COOKIE['auth_token'])) {
+      $jwt_token = $_COOKIE['auth_token'];
+      $decoded_token = $this->jwtModel->decodeToken($jwt_token);
+      return $decoded_token->user_id ?? null;
     }
   }
 }

@@ -1,9 +1,9 @@
 <header id="header">
   <div id="header-content">
     <nav class="main-nav">
-      <div class="logo">
+      <a href="/shopping" class="logo">
         <img src="/shopping/assets/images/Exclusive.png" alt="" srcset="">
-      </div>
+      </a>
       <ul class="nav">
         <li class="nav-item"><a href="/shopping" class="nav-link">Home</a></li>
         <li class="nav-item"><a href="" class="nav-link">Contact</a></li>
@@ -49,7 +49,7 @@
             </div>
             <div class="user-dropdown">
               <a href="#">Profile</a>
-              <a href="#">Logout</a>
+              <a href="" id="logout">Logout</a>
             </div>
           </div>
         </div>

@@ -1,26 +1,28 @@
 import $ from 'jquery';
-import automaticSlide from './components/showSlide';
-import redirectToProductDetail from './components/redirectToProductDetail';
-import handleCart from './components/cart';
-import counter from './components/counter';
-import showHideLabel from './components/showHideLabel';
-import register from './auth/register';
-import signin from './auth/signin';
-import getUserInfoFromToken from './components/getUserInfoFromToken';
+import layout from './layout';
 $(function () {
-  automaticSlide();
+  layout();
 
-  redirectToProductDetail();
+  const pageName = $('body').data('page');
 
-  handleCart();
-
-  counter();
-
-  showHideLabel();
-
-  register();
-
-  signin();
-
-  getUserInfoFromToken();
+  switch (pageName) {
+    case 'home':
+      import('./pages/home.js').then(module => module.default());
+      break;
+    case 'productDetail':
+      import('./pages/productDetail.js').then(module => module.default());
+      break;
+    case 'signup':
+      import('./pages/signup.js').then(module => module.default());
+      break;
+    case 'login':
+      import('./pages/login.js').then(module => module.default());
+      break;
+    case 'carts':
+      import('./pages/carts.js').then(module => module.default());
+      break;
+    default:
+      console.warn(`No script found for page: ${pageName}`);
+      break;
+  }
 });

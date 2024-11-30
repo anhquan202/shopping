@@ -3,22 +3,27 @@
 require_once __DIR__ . '/../models/eav-users/UserModel.php';
 require_once __DIR__ . '/../models/eav-users/AttributeUserModel.php';
 require_once __DIR__ . '/../models/eav-users/ValuesUserModel.php';
+require_once __DIR__ . '/../models/JWTModel.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../config/define.php';
 
 class AuthController
 {
-  private $userModel, $attributeUserModel, $valuesUserModel;
+  private $userModel, $attributeUserModel, $valuesUserModel, $jwtModel;
   public function __construct()
   {
     $this->userModel = new UserModel();
     $this->attributeUserModel = new AttributeUserModel();
     $this->valuesUserModel = new ValuesUserModel();
+    $this->jwtModel = new JWTModel();
   }
 
   public function loginPage()
   {
     ob_start();
+    // set data-page for loading file js
+    $data_page = 'login';
+
     require_once __DIR__ . '/../views/login/index.php';
     $content = ob_get_clean();
     require_once __DIR__ . '/../views/layout/index.php';
@@ -26,6 +31,8 @@ class AuthController
   public function signupPage()
   {
     ob_start();
+    // set data-page for loading file js
+    $data_page = 'signup';
     require_once __DIR__ . '/../views/signup/index.php';
     $content = ob_get_clean();
     require_once __DIR__ . '/../views/layout/index.php';
@@ -101,7 +108,7 @@ class AuthController
         header('Content-Type: application/json');
         echo json_encode([
           'status' => 201,
-          'message' => 'Register successfully',
+          'message' => 'Signin successfully',
         ]);
       } else {
         header('Content-Type: application/json');
@@ -157,6 +164,21 @@ class AuthController
       $authUrl = $client->createAuthUrl();
       header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
       exit();
+    }
+  }
+  public function logout()
+  {
+    try {
+      if (isset($_COOKIE['auth_token'])) {
+        setcookie('auth_token', '', time() - 3600, '/', '', true, true);
+        header('Content-Type: application/json');
+        echo json_encode([
+          'status' => 201,
+          'message' => 'You logged out, bye!'
+        ]);
+      }
+    } catch (\Throwable $th) {
+      throw $th;
     }
   }
 }

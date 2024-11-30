@@ -14,6 +14,9 @@ class ProductDetailController
   public function index()
   {
     ob_start();
+    // set data-page for loading file js
+    $data_page = 'productDetail';
+
     $productById = $this->getProductById();
     $detailProduct = $this->getProductDetail();
     require_once __DIR__ . '/../views/productDetail/index.php';

@@ -11,6 +11,9 @@ class ProductController
   public function index()
   {
     ob_start();
+    // set data-page for loading file js
+    $data_page = 'products';
+
     $paginations = $this->showPaginatedProducts();
     $products = $paginations['products'];
     $totalPages = $paginations['totalPages'];

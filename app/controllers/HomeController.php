@@ -13,6 +13,9 @@ class HomeController
   public function index()
   {
     ob_start();
+    // set data-page for loading file js
+    $data_page = 'home';
+
     $categories = $this->categoriesModel->getCategories();
     $products = $this->getRandomProducts();
     require_once __DIR__ . '/../views/home/index.php';

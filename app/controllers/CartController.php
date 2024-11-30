@@ -21,7 +21,7 @@ class CartController
     // set data-page for loading file js
     $data_page = 'carts';
 
-    $cartItem = $this->getCart();
+    $carts = $this->getCart();
     require_once __DIR__ . '/../views/cart/index.php';
 
     $content = ob_get_clean();
@@ -63,19 +63,29 @@ class CartController
   public function getCart()
   {
     $user_id = $this->getUserId();
-    $cartItems = $this->cartModel->getCart($user_id);
-    $product_list = [];
+    $cart_items = $this->cartModel->getCart($user_id);
 
-    foreach ($cartItems as $item) {
-      $product = $this->productModel->getProductById($item['product_id']);
-      if ($product) {
-        $product['quantity'] = $item['quantity'];
-        $product_list[] = $product;
+    $cart_data = [];
+    if (!empty($cart_items)) {
+      $cart_id = $cart_items[0]['cart_id'];
+      $cart_data['cart_id'] = $cart_id;
+
+      $cart_data['products'] = [];
+
+      foreach ($cart_items as $item) {
+        if (isset($item['product_id'])) {
+          $product = $this->productModel->getProductById($item['product_id']);
+          if ($product) {
+            $product['quantity'] = $item['quantity'];
+            $cart_data['products'][] = $product;
+          }
+        }
       }
     }
 
-    return $product_list;
+    return $cart_data;
   }
+
 
   public function counterCart()
   {

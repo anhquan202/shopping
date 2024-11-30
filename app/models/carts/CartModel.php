@@ -103,7 +103,7 @@ class CartModel
     $result = $stmt->get_result();
 
     $cart_items = [];
-    if ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
       $cart_items[] = $row;
     }
     return $cart_items;

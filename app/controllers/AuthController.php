@@ -58,7 +58,7 @@ class AuthController
         setcookie(
           'auth_token',
           $result['token'],
-          time() + 3600,
+          time() + 10000,
           '/',
           '',
           true,
@@ -98,7 +98,7 @@ class AuthController
         setcookie(
           'auth_token',
           $result['token'],
-          time() + 3600,
+          time() + 10000,
           '/',
           '',
           true,
@@ -151,7 +151,7 @@ class AuthController
         setcookie(
           'auth_token',
           $result['token'],
-          time() + 3600,
+          time() + 10000,
           '/',
           '',
           true,
@@ -170,7 +170,7 @@ class AuthController
   {
     try {
       if (isset($_COOKIE['auth_token'])) {
-        setcookie('auth_token', '', time() - 3600, '/', '', true, true);
+        setcookie('auth_token', '', time() - 10000, '/', '', true, true);
         header('Content-Type: application/json');
         echo json_encode([
           'status' => 201,

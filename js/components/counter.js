@@ -9,19 +9,19 @@ function minusQuantity() {
 
   $('.btn-minus').on('click', function (e) {
     e.preventDefault();
-    var productId = $(this).data('product-id');
-    var productElement = $('#product-' + productId);
+    const productId = $(this).data('product-id');
+    const productElement = $('#product-' + productId);
+    const cartId = $('#carts').data('cart-id');
 
-    var quantityInput = $(this).closest('.quantity-input').find('.quantity');
-    var quantity = parseInt(quantityInput.val());
+    const quantityInput = $(this).closest('.quantity-input').find('.quantity');
+    const quantity = parseInt(quantityInput.val());
 
-    var path = window.location.pathname;
+    let path = window.location.pathname;
 
     if (quantity > 1) {
       quantity -= 1;
       quantityInput.val(quantity);
       updatePriceItem(productElement);
-      updateTotalPrice();
     } else if (quantity === 1) {
       if (path.includes('cart')) {
         if (confirm('Remove this product?')) {
@@ -29,10 +29,11 @@ function minusQuantity() {
             method: "POST",
             url: 'cart/remove-item',
             data: {
-              product_id: productId
+              product_id: productId,
+              cart_id: cartId
             },
             success: function (response) {
-              if (response.success === 200) {
+              if (response.status === 200) {
                 $('#product-' + productId).remove();
                 if ($('.list-item .item').length === 0) {
                   $('.my-carts').html('<p>Your cart is empty. Add items to start shopping!</p>');
@@ -49,6 +50,7 @@ function minusQuantity() {
       }
     }
   })
+  updateTotalPrice();
 }
 function plusQuantity() {
 

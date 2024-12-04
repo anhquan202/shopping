@@ -87,15 +87,11 @@ class UserModel
         $user = $result->fetch_assoc();
 
         if (password_verify($password, $user['password'])) {
-          $data = [
+          $payload = [
             'user_id' => $user['user_id'],
-            'user_phone' => $user['user_phone'],
-            'full_name' => $user['full_name'],
-            'user_email' => $user['user_email'],
-            'avatar' => $user['avatar'],
           ];
 
-          $jwt = $this->jwtModel->encodeToken($data);
+          $jwt = $this->jwtModel->encodeToken($payload);
           return [
             'status' => 200,
             'token' => $jwt
@@ -126,10 +122,6 @@ class UserModel
       $user = $result->fetch_assoc();
       $payload = [
         'user_id' => $user['user_id'],
-        'oauth_id' => $user['oauth_id'],
-        'full_name' => $user['full_name'],
-        'user_email' => $user['user_email'],
-        'avatar' => $user['avatar']
       ];
 
       $jwt = $this->jwtModel->encodeToken($payload);
@@ -152,10 +144,6 @@ class UserModel
       if ($stmt_insert_user->execute()) {
         $payload = [
           'user_id' => $this->conn->insert_id,
-          'oauth_id' => $data['oauth_id'],
-          'full_name' => $data['full_name'],
-          'user_email' => $data['user_email'],
-          'avatar' => $data['avatar']
         ];
 
         $jwt = $this->jwtModel->encodeToken($payload);
@@ -173,6 +161,35 @@ class UserModel
         ];
       }
     }
+  }
+
+  public function getInfoUser($user_id)
+  {
+    $query = 'SELECT u.user_id, u.full_name, u.user_phone, u_a.attribute_name, u_v.value from users u
+              inner join user_values u_v on u.user_id = u_v.user_id 
+              inner join user_attributes u_a on u_v.attribute_id = u_a.attribute_id 
+              where u.user_id = ?;';
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $user = [];
+    if ($result->num_rows > 0) {
+      $data = $result->fetch_assoc();
+
+      $user['user_id'] = $data['user_id'];
+      $user['full_name'] = $data['full_name'];
+      $user['user_phone'] = $data['user_phone'];
+
+      $info = [];
+      do {
+        $info[$data['attribute_name']] = $data['value'];
+      } while ($data = $result->fetch_assoc());
+
+      $user['info'] = $info;
+    }
+    return $user;
   }
 
   private function isExistUser($user_phone)

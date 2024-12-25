@@ -1,7 +1,7 @@
 <?php
 $title = 'Your Cart';
 ?>
-<?php if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])): ?>
+<?php if (isset($carts) && count($carts) > 0): ?>
   <section class="my-carts">
     <ul class="heading-title">
       <li>Product</li>
@@ -10,10 +10,10 @@ $title = 'Your Cart';
       <li>Purchase</li>
       <li>Actions</li>
     </ul>
-    <form method="post" id="buy-products">
+    <section id="carts" data-cart-id="<?= $carts['cart_id']; ?>">
       <div class="list-item">
-        <?php foreach ($cartItem as $product): ?>
-          <div class="item" id="product-<?= $product['product_id']; ?>">
+        <?php foreach ($carts['products'] as $product): ?>
+          <div class="item" id="product-<?= $product['product_id']; ?>" name="product_id">
             <div class="name">
               <img src="/shopping/assets/images/<?= $product['primary_image'] ?>" alt="product-image">
               <span><?= $product['name']; ?></span>
@@ -32,18 +32,18 @@ $title = 'Your Cart';
                 </button>
               </div>
             </div>
-            <span class="products-price"><?= number_format($product['quantity'] * $product['price_out']); ?></span>
+            <span class="products-price" name="subtotal"><?= number_format($product['quantity'] * $product['price_out']); ?></span>
             <button class="btn-remove" data-product-id="<?= $product['product_id']; ?>">Remove</button>
           </div>
         <?php endforeach ?>
       </div>
       <div class="payment">
-        <span class="purchase-final"></span>
-        <button class="btn-buy">
+        <span class="purchase-final" name="total_amount"></span>
+        <a href="checkout" class="btn-buy">
           Buy Products
-        </button>
+        </a>
       </div>
-    </form>
+    </section>
   </section>
 <?php else: ?>
   <p>Your cart is empty. Add items to start shopping!</p>

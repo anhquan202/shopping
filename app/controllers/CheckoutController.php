@@ -1,10 +1,15 @@
 <?php
 require_once __DIR__ .  '/../controllers/CartController.php';
+require_once __DIR__ . '/../models/orders/OrderModel.php';
+require_once __DIR__ . '/../models/JWTModel.php';
 class CheckoutController
 {
+  private $orderModel, $jwtModel;
   private $cartController;
   public function __construct()
   {
+    $this->orderModel = new OrderModel();
+    $this->jwtModel = new JWTModel();
     $this->cartController = new CartController();
   }
   public function index()
@@ -39,7 +44,6 @@ class CheckoutController
     $vnp_Locale = 'vn'; //Ngôn ngữ chuyển hướng thanh toán
     $vnp_BankCode = $_POST['bankcode'] || ""; //Mã phương thức thanh toán
     $vnp_IpAddr = $_SERVER['REMOTE_ADDR']; //IP Khách hàng thanh toán
-    $cart_Id = $_POST['cart_id'];
 
     $inputData = array(
       "vnp_Version" => "2.1.0",
@@ -50,7 +54,7 @@ class CheckoutController
       "vnp_CurrCode" => "VND",
       "vnp_IpAddr" => $vnp_IpAddr,
       "vnp_Locale" => $vnp_Locale,
-      "vnp_OrderInfo" => "Thanh toan hoa don co id: {$cart_Id}",
+      "vnp_OrderInfo" => "Thanh toan hoa don",
       "vnp_OrderType" => "other",
       "vnp_ReturnUrl" => $vnp_Returnurl,
       "vnp_TxnRef" => $vnp_TxnRef,
@@ -60,7 +64,6 @@ class CheckoutController
     if (isset($vnp_BankCode) && $vnp_BankCode != "") {
       $inputData['vnp_BankCode'] = $vnp_BankCode;
     }
-
     // var_dump($inputData);
     // die();
     ksort($inputData);
@@ -95,5 +98,50 @@ class CheckoutController
     } else {
       echo json_encode($returnData);
     }
+  }
+
+  public function thankyou()
+  {
+    ob_start();
+    $data_page = 'thank you';
+    $this->saveOrder();
+    require_once __DIR__ . '/../views/thanks/index.php';
+    $content = ob_get_clean();
+    require_once __DIR__ . '/../views/layout/index.php';
+  }
+  public function saveOrder()
+  {
+    $cart = $this->getCart();
+    $total_amount = $cart['total_amount'] ?? 0;
+
+    if (empty($cart['products']) || $total_amount <= 0) {
+      throw new Exception("Cart is empty or total amount is invalid.");
+    }
+
+    if (!isset($_COOKIE['auth_token'])) {
+      throw new Exception("User is not authenticated.");
+    }
+
+    $jwt_token = $_COOKIE['auth_token'];
+    $decode = $this->jwtModel->decodeToken($jwt_token);
+
+    if (!isset($decode->data->user_id)) {
+      throw new Exception("Invalid JWT token.");
+    }
+
+    $user_id = $decode->data->user_id;
+
+    $payment_method = $_GET['vnp_CardType'] ?? $_GET['payment_method'] ?? null;
+    if (empty($payment_method)) {
+      throw new Exception("Payment method is not specified.");
+    }
+
+    $order = [
+      'user_id' => $user_id,
+      'total_amount' => $total_amount
+    ];
+
+    $cart_products = $cart['products'];
+    $this->orderModel->saveOrder($order, $cart_products, $payment_method);
   }
 }

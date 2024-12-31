@@ -72,15 +72,18 @@ class CartController
 
       $cart_data['products'] = [];
 
+      $total_amount = 0;
       foreach ($cart_items as $item) {
         if (isset($item['product_id'])) {
           $product = $this->productModel->getProductById($item['product_id']);
           if ($product) {
             $product['quantity'] = $item['quantity'];
+            $total_amount += $item['quantity'] * $product['price_out'];
             $cart_data['products'][] = $product;
           }
         }
       }
+      $cart_data['total_amount'] = $total_amount;
     }
 
     return $cart_data;

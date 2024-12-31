@@ -1,12 +1,14 @@
 @import '../components/flex/flex-setting';
 @import '../components/flex/flex-column-gap';
 
-@mixin arrange-product(){
+@mixin arrange-product() {
   @include flex-column-gap(16px);
-  .search-group{
+
+  .search-group {
     display: flex;
     gap: 36px;
     height: 48px;
+
     .search-item {
       @include flex-setting(space-between, center, row, 0);
       width: 20%;
@@ -14,17 +16,19 @@
       padding: 8px 16px;
       background: rgba($text1, 0.6);
       border-radius: 4px;
+
       a {
         text-decoration: none;
         color: $button;
         font-weight: 600;
       }
+
       img {
         width: inherit;
         height: inherit;
         object-fit: contain;
       }
+    }
   }
-  }
-  
+
 }

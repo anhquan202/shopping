@@ -19,7 +19,7 @@
     }
   }
 
-  #buy-products {
+  #carts {
     width: 100%;
 
     .list-item {
@@ -95,6 +95,7 @@
 
     .payment {
       @include flex-setting(flex-end, center, row, 32px);
+      padding-top: 16px;
 
       span {
         font-weight: 600;
@@ -102,6 +103,7 @@
 
       .btn-buy {
         @include button($button2, $text);
+        text-decoration: none;
       }
     }
   }

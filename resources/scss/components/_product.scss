@@ -11,10 +11,12 @@
     border-radius: 4px;
     box-shadow: 0 0px 15px rgba(0, 0, 0, 0.2);
     padding: 16px;
+    cursor: pointer;
 
     .product-image {
       @include flex-setting(center, center);
       height: 65%;
+
       img {
         width: 80%;
         height: auto;
@@ -30,6 +32,7 @@
 
       span {
         color: $secondary2;
+        font-weight: 600;
       }
     }
 
@@ -41,19 +44,22 @@
       right: 16px;
       top: 16px;
       transition: 0.5s ease-in;
+
       &:hover {
-        .heart-icon{
+        .heart-icon {
           fill: $button2;
         }
+
         top: 24px;
         width: 32px;
       }
     }
+
     &:hover {
-      .wishlist{
+      .wishlist {
         @include flex-setting(center, center);
       }
-      
+
     }
   }
 }

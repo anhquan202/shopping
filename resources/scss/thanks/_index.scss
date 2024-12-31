@@ -1,0 +1,14 @@
+@import '../components/button';
+
+.thanks {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 32px;
+
+  .redirect-home {
+    @include button($button2, $secondary);
+  }
+}

@@ -88,12 +88,12 @@ foreach ($carts['products'] as $product) {
     <div class="payment-options">
       <h3>Payment Method</h3>
       <section class="options">
-        <label for="vnpay">
-          <input type="radio" name='payment-method' value="vnpay" required>
+        <label for="atm">
+          <input type="radio" name='payment_method' value="ATM" required>
           <img src="assets\icons\icon-vnpay.png" alt="VNPay" class="icon-payment">
         </label>
-        <label for="cod">
-          <input type="radio" name='payment-method' value="cod" required>
+        <label for="delivered">
+          <input type="radio" name='payment_method' value="delivered" required>
           Cash on delivery
         </label>
       </section>

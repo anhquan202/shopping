@@ -12,9 +12,16 @@ class OrderModel
   public function saveOrder($order = [], $cart_products = [], $payment_method)
   {
     try {
-      $insert_order = 'INSERT INTO orders(user_id, total_amount) value(?, ?)';
+      $insert_order = 'INSERT INTO orders(user_id, total_amount, receiver_address, receiver_name, receiver_phone) value(?, ?, ?, ?, ?)';
       $order_stmt = $this->conn->prepare($insert_order);
-      $order_stmt->bind_param('ii', $order['user_id'], $order['total_amount']);
+      $order_stmt->bind_param(
+        'iisss',
+        $order['user_id'],
+        $order['total_amount'],
+        $order['receiver_address'],
+        $order['receiver_name'],
+        $order['receiver_phone']
+      );
       $order_stmt->execute();
       $order_id = $this->conn->insert_id;
 

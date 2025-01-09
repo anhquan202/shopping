@@ -1,7 +1,9 @@
 <?php $title = 'Checkout Page';
-$total_price = 0;
-foreach ($carts['products'] as $product) {
-  $total_price += $product['quantity'] * $product['price_out'];
+if (isset($carts['products'])) {
+  $total_price = 0;
+  foreach ($carts['products'] as $product) {
+    $total_price += $product['quantity'] * $product['price_out'];
+  }
 }
 ?>
 <form id="checkout">
@@ -11,9 +13,9 @@ foreach ($carts['products'] as $product) {
       <h3>Receiver Address</h3>
       <div class="info-detail">
         <div class="identity">
-          <span id="full_name"></span>
-          <span id="user_phone"></span>
-          <span id="address"></span>
+          <span id="full_name" name="full_name"></span>
+          <span id="user_phone" name="user_phone"></span>
+          <span id="address" name="address"></span>
         </div>
         <a href="#" class="change-address">Thay đổi</a>
       </div>
@@ -23,18 +25,18 @@ foreach ($carts['products'] as $product) {
           <div class="info-user">
             <div class="form-group">
               <label for="full_name">Full Name *</label>
-              <input type="text" id="full_name" name="full_name" placeholder="Full Name" class="input-field">
+              <input type="text" id="full_name" placeholder="Full Name" class="input-field">
               <b class="error error-fullname"></b>
             </div>
             <div class="form-group">
               <label for="user_phone">Phone Number *</label>
-              <input type="text" id="user_phone" name="user_phone" placeholder="Phone Number" class="input-field">
+              <input type="text" id="user_phone" placeholder="Phone Number" class="input-field">
               <b class="error error-phone"></b>
             </div>
           </div>
           <div class="form-group">
             <label for="address">Address*</label>
-            <input type="text" id="address" name="address" class="input-field" placeholder="Receiver Address" required>
+            <input type="text" id="address" class="input-field" placeholder="Receiver Address" required>
             <div id="suggestions-list" class="suggestions">
               <div class="options">
                 <div id="province" class="btn-select active">Province</div>

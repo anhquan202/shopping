@@ -99,49 +99,4 @@ class CheckoutController
       echo json_encode($returnData);
     }
   }
-
-  public function thankyou()
-  {
-    ob_start();
-    $data_page = 'thank you';
-    $this->saveOrder();
-    require_once __DIR__ . '/../views/thanks/index.php';
-    $content = ob_get_clean();
-    require_once __DIR__ . '/../views/layout/index.php';
-  }
-  public function saveOrder()
-  {
-    $cart = $this->getCart();
-    $total_amount = $cart['total_amount'] ?? 0;
-
-    if (empty($cart['products']) || $total_amount <= 0) {
-      throw new Exception("Cart is empty or total amount is invalid.");
-    }
-
-    if (!isset($_COOKIE['auth_token'])) {
-      throw new Exception("User is not authenticated.");
-    }
-
-    $jwt_token = $_COOKIE['auth_token'];
-    $decode = $this->jwtModel->decodeToken($jwt_token);
-
-    if (!isset($decode->data->user_id)) {
-      throw new Exception("Invalid JWT token.");
-    }
-
-    $user_id = $decode->data->user_id;
-
-    $payment_method = $_GET['vnp_CardType'] ?? $_GET['payment_method'] ?? null;
-    if (empty($payment_method)) {
-      throw new Exception("Payment method is not specified.");
-    }
-
-    $order = [
-      'user_id' => $user_id,
-      'total_amount' => $total_amount
-    ];
-
-    $cart_products = $cart['products'];
-    $this->orderModel->saveOrder($order, $cart_products, $payment_method);
-  }
 }

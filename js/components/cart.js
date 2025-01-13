@@ -1,5 +1,5 @@
 import $, { error } from 'jquery';
-import { getUserInfoFromApi } from './handleUserInfo';
+import { getUserInfoFromApi } from './userInfo/getUserInfoFromApi';
 import { updateTotalPrice } from './counter';
 function handleCart() {
   addToCart();

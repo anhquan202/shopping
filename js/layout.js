@@ -1,7 +1,8 @@
 import logout from "./auth/logout";
-import counter from "./components/counter";
-
+import { updateCartCount } from "./components/cart";
+import showUserInfoInHeader from "./components/userInfo/showInHeader";
 export default function layout() {
-  counter();
+  showUserInfoInHeader();
+  updateCartCount();
   logout();
 }

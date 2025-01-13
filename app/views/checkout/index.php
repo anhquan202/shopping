@@ -13,9 +13,9 @@ if (isset($carts['products'])) {
       <h3>Receiver Address</h3>
       <div class="info-detail">
         <div class="identity">
-          <span id="full_name" name="full_name"></span>
-          <span id="user_phone" name="user_phone"></span>
-          <span id="address" name="address"></span>
+          <span id="receiver-name" class="receiver" name="full_name"></span>
+          <span id="receiver-phone" class="receiver" name="user_phone"></span>
+          <span id="receiver-address" class="receiver" name="address"></span>
         </div>
         <a href="#" class="change-address">Thay đổi</a>
       </div>
@@ -48,6 +48,7 @@ if (isset($carts['products'])) {
               </ul>
             </div>
           </div>
+          <button type="button" class="btn-save">Save</button>
         </div>
       </div>
     </div>

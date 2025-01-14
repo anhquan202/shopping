@@ -21,8 +21,7 @@
         .identity {
           @include flex-setting(flex-start, center, row, 24px);
 
-          #fullname,
-          #phone {
+          .receiver {
             font-weight: 600;
           }
         }
@@ -53,7 +52,7 @@
 
         #modal {
           width: 50%;
-          height: 500px;
+          height: 51%;
           margin-top: 15%;
           padding: 16px;
           background-color: #fff;
@@ -156,6 +155,12 @@
               color: $button2;
               font-size: 12px;
             }
+          }
+
+          .btn-save {
+            @include button($submit-button, $text);
+            width: 100%;
+            margin-top: 16px;
           }
         }
       }

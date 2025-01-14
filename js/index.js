@@ -21,6 +21,12 @@ $(function () {
     case 'carts':
       import('./pages/carts.js').then(module => module.default());
       break;
+    case 'checkout':
+      import('./pages/checkout.js').then(module => module.default());
+      break;
+    case 'thanks':
+      import('./pages/thanks.js').then(module => module.default());
+      break;
     default:
       console.warn(`No script found for page: ${pageName}`);
       break;

@@ -14,8 +14,9 @@ function getAddressData() {
 function updateAddress() {
   const fullAddress = [selectedProvince, selectedDistrict, selectedWard]
     .filter(Boolean)
-    .join(', ');
-  $('#address').val(fullAddress);
+    .join(' - ');
+
+  $('.form-group #address').val(fullAddress);
 }
 
 /**
@@ -54,8 +55,8 @@ function displayDistrictByProvince() {
     if (!provinceCode) {
       return;
     };
-    selectedDistrict = '';
-    selectedWard = '';
+    // selectedDistrict = '';
+    // selectedWard = '';
     selectedProvince = $(this).text();
     updateAddress();
 

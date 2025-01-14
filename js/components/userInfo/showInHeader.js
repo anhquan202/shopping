@@ -8,6 +8,7 @@ async function showUserInfoInHeader() {
     const fullName = userInfo.fullName;
     const lastName = fullName.split(' ').pop();
 
+    $('.redirect-login').css('display', 'none');
     $('.user-info').css('display', 'block')
     $('.user-info').find('.user-name').text(lastName);
     if (userInfo.avatar) {

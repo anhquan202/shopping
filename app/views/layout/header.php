@@ -40,12 +40,14 @@
               <p class="cart-item-count" id="shopping-cart">0</p>
             </div>
           </a>
+          <a class="redirect-login" style="display: flex; align-items: flex-start; text-decoration: none; color: #000;" href="login">
+            <img src="/shopping/assets/icons/icon-user.svg" alt="" srcset="">
+            Login
+          </a>
           <div class="user-info">
             <div class="user-display">
               <img id="user-icon" src="/shopping/assets/icons/icon-user.svg" alt="">
-              <span class="user-name">
-                Name user
-              </span>
+              <span class="user-name"></span>
             </div>
             <div class="user-dropdown">
               <a href="#">Profile</a>

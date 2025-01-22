@@ -1,22 +1,14 @@
 import $ from 'jquery';
 import { getProvinces, getDistrictByProvince, getWardByDistrict } from './callApi';
 
-let selectedProvince = '';
-let selectedDistrict = '';
-let selectedWard = '';
+let selectedProvince = undefined;
+let selectedDistrict = undefined;
+let selectedWard = undefined;
 
 function getAddressData() {
   displayProvinces();
   displayDistrictByProvince();
   displayWardByDistrict();
-}
-
-function updateAddress() {
-  const fullAddress = [selectedProvince, selectedDistrict, selectedWard]
-    .filter(Boolean)
-    .join(' - ');
-
-  $('.form-group #address').val(fullAddress);
 }
 
 /**
@@ -37,12 +29,13 @@ function renderAddressList(list = {}, unit = '', key = '') {
   $('.btn-select').removeClass('active');
   $(`#${unit}`).addClass('active');
 }
+
 //Show Provinces
 async function displayProvinces() {
   const provinces = await getProvinces();
   renderAddressList(provinces, 'province', 'province')
 
-  $('#province').on('click', function () {
+  $('#province').off('click').on('click', function () {
     renderAddressList(provinces, 'province', 'province')
   })
 }
@@ -50,16 +43,15 @@ async function displayProvinces() {
 //Show District by Specific Province 
 function displayDistrictByProvince() {
   $('.list-address').on('click', 'li[data-province-code]', async function () {
+    selectedDistrict = undefined;
+    selectedWard = undefined;
+
     const provinceCode = $(this).data('province-code');
 
     if (!provinceCode) {
       return;
     };
-    // selectedDistrict = '';
-    // selectedWard = '';
     selectedProvince = $(this).text();
-    updateAddress();
-
     try {
       const district = await getDistrictByProvince();
       const districtByProvince = district.reduce(function (result, item) {
@@ -73,21 +65,20 @@ function displayDistrictByProvince() {
     } catch (error) {
       throw new Error(error);
     }
+    updateAddress();
   })
 }
 
 //Show Ward by Specific District from Province 
 function displayWardByDistrict() {
   $('.list-address').on('click', 'li[data-district-code]', async function () {
-    const districtCode = $(this).data('district-code');
+    selectedWard = undefined;
 
+    const districtCode = $(this).data('district-code');
     if (!districtCode) {
       return;
     };
-
     selectedDistrict = $(this).text();
-    updateAddress();
-
     try {
       const wards = await getWardByDistrict();
       const wardByDistrict = wards.reduce(function (result, item) {
@@ -101,12 +92,48 @@ function displayWardByDistrict() {
     } catch (error) {
       throw new Error(error);
     }
+    updateAddress();
   })
 
   $('.list-address').on('click', 'li[data-ward-code]', function () {
     selectedWard = $(this).text();
     updateAddress();
+    $('#suggestions-list').slideUp();
   });
 }
 
+function updateAddress() {
+  const address = [selectedProvince, selectedDistrict, selectedWard];
+  const fullAddress = address.filter(Boolean).join(' - ');
+  $('.form-group #address').val(fullAddress);
+  showSuggestions();
+}
+
+function showSuggestions() {
+  const addressElement = $('.form-group #address');
+  let currentAddress = addressElement.val();
+
+  addressElement.off('focus').on('focus', function () {
+    addressElement.siblings('label').addClass('visible');
+    addressElement.attr('placeholder', currentAddress);
+    addressElement.val('');
+    $('#suggestions-list').slideDown();
+    $('.btn-select').removeClass('active');
+    $('#province').addClass('active');
+    displayProvinces();
+  });
+
+  addressElement.off('blur').on('blur', function () {
+    addressElement.removeAttr('placeholder');
+    setTimeout(() => {
+      addressElement.val(currentAddress);
+      if (selectedProvince !== undefined && selectedDistrict !== undefined && selectedWard !== undefined) {
+        addressElement.val(currentAddress);
+        $('#suggestions-list').slideUp();
+      } else {
+        $('#suggestions-list').slideDown();
+      }
+    }, 50);
+  })
+}
 export default getAddressData;

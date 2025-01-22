@@ -1,0 +1,118 @@
+@import '../components/flex/flex-column-gap';
+@import '../components/flex/flex-setting';
+@import '../components/button';
+
+.complete-profile {
+  width: 50%;
+  margin: 0 auto;
+  padding: 24px 0;
+  @include flex-column-gap(24px);
+
+  .heading {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+  }
+
+  .form-group {
+    @include flex-column-gap(8px);
+    position: relative;
+
+    label {
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      color: $button2;
+
+      &.visible {
+        visibility: visible;
+        top: -24px;
+        left: 0;
+        font-weight: 600;
+      }
+    }
+
+    .input-field {
+      height: 32px;
+      font-size: inherit;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid rgba($color: $text1, $alpha: 0.4);
+    }
+
+    .suggestions {
+      position: relative;
+      border: 1px solid rgba($color: $text1, $alpha: 0.6);
+      border-radius: 4px;
+
+      .options {
+        @include flex-setting(flex-start, center);
+        position: sticky;
+        top: 0;
+        width: 100%;
+        border: 1px solid rgba($color: $text1, $alpha: 0.6);
+
+        .btn-select {
+          @include button(rgba($secondary, 0.4), $text2, 8px 12px, 0);
+          width: calc(100% / 3);
+          text-align: center;
+          position: relative;
+          font-weight: 700;
+
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+          }
+
+          &.active {
+            color: $secondary2;
+
+            &::after {
+              height: 2px;
+              background-color: $secondary2;
+              transform: scale(1);
+              transform-origin: bottom left;
+            }
+          }
+        }
+      }
+
+      .list-address {
+        list-style: none;
+        max-height: 230px;
+        overflow-y: auto;
+
+        li {
+          padding: 12px;
+
+          &:hover {
+            cursor: pointer;
+            background-color: $text1;
+            color: $text;
+          }
+        }
+      }
+    }
+
+    .error {
+      color: $button2;
+      font-size: 12px;
+    }
+  }
+
+  .btn-save {
+    width: 100%;
+    margin-top: 16px;
+    @include button($submit-button, $text, 8px 24px, 4px);
+  }
+}

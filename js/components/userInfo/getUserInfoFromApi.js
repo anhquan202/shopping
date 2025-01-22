@@ -37,8 +37,7 @@ async function getUserInfoDetail() {
     };
     return cachedUserInfo;
   } catch (error) {
-    console.error('Error fetching user info:', error);
-    throw error;
+    throw new Error(error);
   }
 }
 export { getUserInfoFromApi, getUserInfoDetail };

@@ -1,24 +1,17 @@
 <?php
 require_once __DIR__ . '/../../../config/connDatabase.php';
 require_once __DIR__ . '/../JWTModel.php';
+require_once __DIR__ . '/AttributeUserModel.php';
 class UserModel
 {
-  private $user_id, $full_name, $user_name, $user_email, $password, $oauth_provider, $oauth_id, $avatar;
   private $conn;
-  private $jwtModel;
+  private $attributeUserModel, $jwtModel;
 
-  public function __construct($user_id = null, $full_name = null, $user_name = null, $user_email = null, $password = null, $oauth_provider = null, $oauth_id = null, $avatar = null)
+  public function __construct()
   {
-    $this->user_id = $user_id;
-    $this->full_name = $full_name;
-    $this->user_name = $user_name;
-    $this->user_email = $user_email;
-    $this->password = $password;
-    $this->oauth_provider = $oauth_provider;
-    $this->oauth_id = $oauth_id;
-    $this->avatar = $avatar;
     $db = new connDatabase();
     $this->conn = $db->getConnection();
+    $this->attributeUserModel = new AttributeUserModel();
     $this->jwtModel = new JWTModel();
   }
 
@@ -127,17 +120,19 @@ class UserModel
       $jwt = $this->jwtModel->encodeToken($payload);
       return [
         'status' => 200,
+        'user_id' => $payload['user_id'],
         'token' => $jwt
       ];
     } else {
-      $insert_user = 'insert into users (oauth_id, oauth_provider, full_name, user_email, avatar) values (?,?,?,?,?)';
+      $insert_user = 'insert into users (oauth_id, oauth_provider, full_name, user_email, user_phone, avatar) values (?,?,?,?,?,?)';
       $stmt_insert_user = $this->conn->prepare($insert_user);
       $stmt_insert_user->bind_param(
-        'sssss',
+        'ssssss',
         $data['oauth_id'],
         $data['oauth_provider'],
         $data['full_name'],
         $data['user_email'],
+        $data['user_phone'],
         $data['avatar']
       );
 
@@ -145,12 +140,18 @@ class UserModel
         $payload = [
           'user_id' => $this->conn->insert_id,
         ];
-
+        $attributes = $this->attributeUserModel->getUserAttribute();
+        foreach ($attributes as $attribute) {
+          $insert_user_value = 'insert into user_values (user_id, attribute_id, value) values (?,?,?)';
+          $stmt_insert_user_value = $this->conn->prepare($insert_user_value);
+          $stmt_insert_user_value->bind_param('iis', $payload['user_id'], $attribute['attribute_id'], $data[$attribute['attribute_name']]);
+          $stmt_insert_user_value->execute();
+          $stmt_insert_user_value->close();
+        }
         $jwt = $this->jwtModel->encodeToken($payload);
         $stmt_insert_user->close();
-
         return [
-          'status' => 200,
+          'status' => 201,
           'token' => $jwt
         ];
       } else {

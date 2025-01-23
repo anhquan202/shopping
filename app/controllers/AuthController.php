@@ -145,24 +145,27 @@ class AuthController
         'user_email' => $user_email,
         'avatar' => $avatar
       ];
-
-      $result = $this->userModel->authWithGoogle($data);
-      if (isset($result['status']) && $result['status'] === 200) {
-        setcookie(
-          'auth_token',
-          $result['token'],
-          time() + 36000,
-          '/',
-          '',
-          true,
-          true
-        );
-        header('Location: /shopping');
-        exit();
-      }
     } else {
       $authUrl = $client->createAuthUrl();
       header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
+      exit();
+    }
+    $result = $this->userModel->authWithGoogle($data);
+    if (isset($result['status']) && $result['status'] === 200 && isset($result['user_id'])) {
+      setcookie(
+        'auth_token',
+        $result['token'],
+        time() + 36000,
+        '/',
+        '',
+        true,
+        true
+      );
+      header('Location: /shopping');
+      exit();
+    } else {
+      $_SESSION['tempo_user_info'] = $data;
+      header('Location: ../complete-profile');
       exit();
     }
   }

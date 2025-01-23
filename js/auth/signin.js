@@ -40,6 +40,37 @@ function signin() {
   })
 }
 
+// Complete Profile User After Oauth
+function completeProfileUserAfterOauth() {
+  validation();
+  $('.btn-save').on('click', function (e) {
+    e.preventDefault();
+    const fullName = $('#full_name').val();
+    const userPhone = $('#user_phone').val();
+    const address = $('#address').val();
+    $('#user_email').prop('disabled', true);
+    $.ajax({
+      method: 'post',
+      url: 'complete-profile-user-after-oauth',
+      data: {
+        full_name: fullName,
+        user_phone: userPhone,
+        address: address
+      },
+      success: function (response) {
+        if (response.status === 201) {
+          alert(response.message);
+          window.location.href = '/shopping';
+        } else {
+          console.log(response.error);
+        }
+      },
+      error: function (xhr) {
+        throw new Error(xhr.responseText())
+      }
+    })
+  })
+}
 function validation() {
   $('#user_phone').on('input blur', function () {
     validatePhone();
@@ -49,4 +80,4 @@ function validation() {
     validatePassword();
   })
 }
-export default signin;
+export { signin, completeProfileUserAfterOauth };

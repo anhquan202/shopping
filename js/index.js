@@ -27,6 +27,9 @@ $(function () {
     case 'thanks':
       import('./pages/thanks.js').then(module => module.default());
       break;
+    case 'complete-profile':
+      import('./pages/complete-profile.js').then(module => module.default());
+      break;
     default:
       console.warn(`No script found for page: ${pageName}`);
       break;

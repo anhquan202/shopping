@@ -1126,6 +1126,122 @@ body {
   font-weight: 600;
 }
 
+.complete-profile {
+  width: 50%;
+  margin: 0 auto;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.complete-profile .heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.complete-profile .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+.complete-profile .form-group label {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  color: #DB4444;
+}
+.complete-profile .form-group label.visible {
+  visibility: visible;
+  top: -24px;
+  left: 0;
+  font-weight: 600;
+}
+.complete-profile .form-group .input-field {
+  height: 32px;
+  font-size: inherit;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgba(125, 129, 132, 0.4);
+}
+.complete-profile .form-group .suggestions {
+  position: relative;
+  border: 1px solid rgba(125, 129, 132, 0.6);
+  border-radius: 4px;
+}
+.complete-profile .form-group .suggestions .options {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  gap: 0;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  border: 1px solid rgba(125, 129, 132, 0.6);
+}
+.complete-profile .form-group .suggestions .options .btn-select {
+  background-color: rgba(245, 245, 245, 0.4);
+  color: #000000;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  width: 33.3333333333%;
+  text-align: center;
+  position: relative;
+  font-weight: 700;
+}
+.complete-profile .form-group .suggestions .options .btn-select::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+.complete-profile .form-group .suggestions .options .btn-select.active {
+  color: #DB4444;
+}
+.complete-profile .form-group .suggestions .options .btn-select.active::after {
+  height: 2px;
+  background-color: #DB4444;
+  transform: scale(1);
+  transform-origin: bottom left;
+}
+.complete-profile .form-group .suggestions .list-address {
+  list-style: none;
+  max-height: 230px;
+  overflow-y: auto;
+}
+.complete-profile .form-group .suggestions .list-address li {
+  padding: 12px;
+}
+.complete-profile .form-group .suggestions .list-address li:hover {
+  cursor: pointer;
+  background-color: #7D8184;
+  color: #FAFAFA;
+}
+.complete-profile .form-group .error {
+  color: #DB4444;
+  font-size: 12px;
+}
+.complete-profile .btn-save {
+  width: 100%;
+  margin-top: 16px;
+  background-color: #4545f5;
+  color: #FAFAFA;
+  padding: 8px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 #checkout {
   display: flex;
   flex-direction: column;
@@ -1159,8 +1275,7 @@ body {
   flex-direction: row;
   gap: 24px;
 }
-#checkout .billing-details .receiver-address .info-detail .identity #fullname,
-#checkout .billing-details .receiver-address .info-detail .identity #phone {
+#checkout .billing-details .receiver-address .info-detail .identity .receiver {
   font-weight: 600;
 }
 #checkout .billing-details .receiver-address .info-detail .change-address {
@@ -1186,7 +1301,7 @@ body {
 }
 #checkout .billing-details .receiver-address #modal-overlay #modal {
   width: 50%;
-  height: 500px;
+  height: 51%;
   margin-top: 15%;
   padding: 16px;
   background-color: #fff;
@@ -1288,6 +1403,16 @@ body {
 #checkout .billing-details .receiver-address #modal-overlay #modal .form-group .error {
   color: #DB4444;
   font-size: 12px;
+}
+#checkout .billing-details .receiver-address #modal-overlay #modal .btn-save {
+  background-color: #4545f5;
+  color: #FAFAFA;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 16px;
 }
 #checkout .order-summary {
   display: flex;

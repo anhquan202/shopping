@@ -104,7 +104,7 @@ class UserModel
     }
   }
 
-  public function authWithGoogle($data)
+  public function authWithGoogle($data, $user_phone = '')
   {
     $oauthUser = 'select * from users where oauth_id = ?';
     $stmt = $this->conn->prepare($oauthUser);
@@ -120,7 +120,7 @@ class UserModel
       $jwt = $this->jwtModel->encodeToken($payload);
       return [
         'status' => 200,
-        'user_id' => $payload['user_id'],
+        'user_phone' => $user['user_phone'],
         'token' => $jwt
       ];
     } else {
@@ -132,11 +132,11 @@ class UserModel
         $data['oauth_provider'],
         $data['full_name'],
         $data['user_email'],
-        $data['user_phone'],
+        $user_phone,
         $data['avatar']
       );
 
-      if ($stmt_insert_user->execute()) {
+      if ($stmt_insert_user->execute() && $user_phone !== '') {
         $payload = [
           'user_id' => $this->conn->insert_id,
         ];

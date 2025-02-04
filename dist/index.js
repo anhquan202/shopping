@@ -587,34 +587,73 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _jquery = require("jquery");
 var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-var _showSlide = require("./components/showSlide");
-var _showSlideDefault = parcelHelpers.interopDefault(_showSlide);
-var _redirectToProductDetail = require("./components/redirectToProductDetail");
-var _redirectToProductDetailDefault = parcelHelpers.interopDefault(_redirectToProductDetail);
-var _cart = require("./components/cart");
-var _cartDefault = parcelHelpers.interopDefault(_cart);
-var _counter = require("./components/counter");
-var _counterDefault = parcelHelpers.interopDefault(_counter);
-var _showHideLabel = require("./components/showHideLabel");
-var _showHideLabelDefault = parcelHelpers.interopDefault(_showHideLabel);
-var _register = require("./auth/register");
-var _registerDefault = parcelHelpers.interopDefault(_register);
-var _signin = require("./auth/signin");
-var _signinDefault = parcelHelpers.interopDefault(_signin);
-var _userTokenHandler = require("./components/userTokenHandler");
-var _userTokenHandlerDefault = parcelHelpers.interopDefault(_userTokenHandler);
+var _layout = require("./layout");
+var _layoutDefault = parcelHelpers.interopDefault(_layout);
 (0, _jqueryDefault.default)(function() {
-    (0, _showSlideDefault.default)();
-    (0, _redirectToProductDetailDefault.default)();
-    (0, _cartDefault.default)();
-    (0, _counterDefault.default)();
-    (0, _showHideLabelDefault.default)();
-    (0, _registerDefault.default)();
-    (0, _signinDefault.default)();
-    (0, _userTokenHandlerDefault.default)();
+    (0, _layoutDefault.default)();
+    const pageName = (0, _jqueryDefault.default)("body").data("page");
+    switch(pageName){
+        case "home":
+            require("74b9ced1e66281bd").then((module)=>module.default());
+            break;
+        case "productDetail":
+            require("e5c14f5f274c0e7b").then((module)=>module.default());
+            break;
+        case "signup":
+            require("28b9bd50694770d1").then((module)=>module.default());
+            break;
+        case "login":
+            require("e3d189815021ba31").then((module)=>module.default());
+            break;
+        case "carts":
+            require("1d86ed709d5353d9").then((module)=>module.default());
+            break;
+        case "checkout":
+            require("252f58bd1f392180").then((module)=>module.default());
+            break;
+        case "thanks":
+            require("865632c0c095e190").then((module)=>module.default());
+            break;
+        case "complete-profile":
+            require("1e81be3619573ed3").then((module)=>module.default());
+            break;
+        default:
+            console.warn(`No script found for page: ${pageName}`);
+            break;
+    }
 });
 
-},{"jquery":"hgMhh","./components/showSlide":"fg18E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./components/redirectToProductDetail":"8j0Pp","./components/cart":"3yF9P","./components/counter":"5akO1","./components/showHideLabel":"7kL78","./auth/register":"9Jt3p","./auth/signin":"4KhpK","./components/userTokenHandler":"4pDUw"}],"hgMhh":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","jquery":"hgMhh","./layout":"9z9LN","74b9ced1e66281bd":"59KRl","e5c14f5f274c0e7b":"l7mZf","1d86ed709d5353d9":"149va","28b9bd50694770d1":"ijFbk","e3d189815021ba31":"f5dOO","252f58bd1f392180":"1a7NQ","865632c0c095e190":"246Ix","1e81be3619573ed3":"eGyJT"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"hgMhh":[function(require,module,exports) {
 /*!
  * jQuery JavaScript Library v3.7.1
  * https://jquery.com/
@@ -7315,140 +7354,128 @@ var _userTokenHandlerDefault = parcelHelpers.interopDefault(_userTokenHandler);
     return jQuery;
 });
 
-},{}],"fg18E":[function(require,module,exports) {
+},{}],"9z9LN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>layout);
+var _logout = require("./auth/logout");
+var _logoutDefault = parcelHelpers.interopDefault(_logout);
+var _cart = require("./components/cart");
+var _showInHeader = require("./components/userInfo/showInHeader");
+var _showInHeaderDefault = parcelHelpers.interopDefault(_showInHeader);
+function layout() {
+    (0, _showInHeaderDefault.default)();
+    (0, _cart.updateCartCount)();
+    (0, _logoutDefault.default)();
+}
+
+},{"./auth/logout":"3kWrw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./components/cart":"3yF9P","./components/userInfo/showInHeader":"a2Tli"}],"3kWrw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jquery = require("jquery");
 var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-function automaticSlide() {
-    let slideIndex = 0;
-    let slides = (0, _jqueryDefault.default)(".mySlides");
-    let dots = (0, _jqueryDefault.default)(".dot");
-    function showSlides() {
-        (0, _jqueryDefault.default)(slides).removeClass("active").hide();
-        (0, _jqueryDefault.default)(dots).removeClass("active");
-        slideIndex++;
-        if (slideIndex > slides.length) slideIndex = 1;
-        (0, _jqueryDefault.default)(slides[slideIndex - 1]).show().addClass("active");
-        (0, _jqueryDefault.default)(dots[slideIndex - 1]).addClass("active");
-        setTimeout(showSlides, 3000);
-    }
-    setTimeout(showSlides, 3000);
-}
-exports.default = automaticSlide;
-
-},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
+function logout() {
+    try {
+        (0, _jqueryDefault.default)("#logout").on("click", function(e) {
+            e.preventDefault();
+            if (confirm("Do you want to log out your website?")) (0, _jqueryDefault.default).ajax({
+                method: "get",
+                url: "logout",
+                success: function(response) {
+                    if (response.status === 201) {
+                        alert(response.message);
+                        window.location.href = "/shopping";
+                    } else alert("Logout failed, please try again!");
+                },
+                error: function(error) {
+                    console.log(error);
+                    alert("An error occurred while logging out.");
+                }
+            });
         });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"8j0Pp":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jquery = require("jquery");
-var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-function redirectToProductDetail() {
-    (0, _jqueryDefault.default)(".product-item").on("click", function() {
-        var productId = (0, _jqueryDefault.default)(this).data("product-id");
-        window.location.href = "productDetail?product_id=" + productId;
-    });
+    } catch (error) {
+        console.log(error);
+        alert("An error occurred during the logout process.");
+    }
 }
-exports.default = redirectToProductDetail;
+exports.default = logout;
 
 },{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3yF9P":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+//handle counter cart and show in cart-icon
+parcelHelpers.export(exports, "updateCartCount", ()=>updateCartCount);
 var _jquery = require("jquery");
 var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
+var _getUserInfoFromApi = require("./userInfo/getUserInfoFromApi");
 var _counter = require("./counter");
 function handleCart() {
     addToCart();
-    updateCartCount();
     removeItem();
 }
 function addToCart() {
-    (0, _jqueryDefault.default)(".btn_add-to-cart").on("click", function(e) {
+    (0, _jqueryDefault.default)(".btn_add-to-cart").on("click", async function(e) {
         e.preventDefault();
-        if (!localStorage.getItem("authToken")) {
-            alert("You need to register or login!");
-            window.location.href = "signup";
-        } else {
-            var productId = (0, _jqueryDefault.default)(this).data("product-id");
-            var quantity = (0, _jqueryDefault.default)(".quantity").val();
+        var productId = (0, _jqueryDefault.default)(this).data("product-id");
+        var quantity = (0, _jqueryDefault.default)(".quantity").val();
+        try {
+            const user = await (0, _getUserInfoFromApi.getUserInfoFromApi)();
+            const userId = user.user_id;
             (0, _jqueryDefault.default).ajax({
                 method: "POST",
                 url: "cart/add-to-cart",
                 data: {
+                    user_id: userId,
                     product_id: productId,
                     quantity: quantity
                 },
                 success: function(response) {
-                    if (response.success === 200) {
+                    if (response.status === 200) {
                         alert(response.message);
                         updateCartCount();
-                    } else if (response.success === 401) {
-                        alert(response.message);
-                        window.location.href = "login";
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
+                error: function(error) {
+                    console.log(error);
                 }
             });
+        } catch (error) {
+            alert(error.message);
+            window.location.href = "login";
         }
     });
 }
-//handle counter cart and show in cart-icon
 function updateCartCount() {
-    (0, _jqueryDefault.default).ajax({
-        method: "POST",
-        url: "cart/counter-cart",
-        success: function(response) {
-            if (response.success === 200) (0, _jqueryDefault.default)("#shopping-cart").text(response.total_items);
-            else console.log("Error fetching cart count");
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
-        }
-    });
+    try {
+        (0, _jqueryDefault.default).ajax({
+            method: "POST",
+            url: "cart/counter-cart",
+            success: function(response) {
+                if (response.status === 200) (0, _jqueryDefault.default)("#shopping-cart").text(response.total_items);
+                else console.log("Error fetching cart count");
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    } catch (xhr) {
+        console.log(xhr);
+    }
 }
 function removeItem() {
     (0, _jqueryDefault.default)(".btn-remove").on("click", function(e) {
         e.preventDefault();
-        var productId = (0, _jqueryDefault.default)(this).data("product-id");
+        const cartId = (0, _jqueryDefault.default)("#carts").data("cart-id");
+        const productId = (0, _jqueryDefault.default)(this).data("product-id");
         if (confirm("Remove this product?")) (0, _jqueryDefault.default).ajax({
             method: "POST",
             url: "cart/remove-item",
             data: {
-                product_id: productId
+                product_id: productId,
+                cart_id: cartId
             },
             success: function(response) {
-                if (response.success === 200) {
+                if (response.status === 200) {
                     (0, _jqueryDefault.default)("#product-" + productId).remove();
                     if ((0, _jqueryDefault.default)(".list-item .item").length === 0) (0, _jqueryDefault.default)(".my-carts").html("<p>Your cart is empty. Add items to start shopping!</p>");
                 } else console.log(response);
@@ -7457,12 +7484,12 @@ function removeItem() {
                 console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
             }
         });
-        (0, _counter.updateTotalPrice)();
     });
+    (0, _counter.updateTotalPrice)();
 }
 exports.default = handleCart;
 
-},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./counter":"5akO1"}],"5akO1":[function(require,module,exports) {
+},{"jquery":"hgMhh","./counter":"5akO1","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./userInfo/getUserInfoFromApi":"eCCDf"}],"5akO1":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "updateTotalPrice", ()=>updateTotalPrice);
@@ -7477,26 +7504,27 @@ function counter() {
 function minusQuantity() {
     (0, _jqueryDefault.default)(".btn-minus").on("click", function(e) {
         e.preventDefault();
-        var productId = (0, _jqueryDefault.default)(this).data("product-id");
-        var productElement = (0, _jqueryDefault.default)("#product-" + productId);
-        var quantityInput = (0, _jqueryDefault.default)(this).closest(".quantity-input").find(".quantity");
-        var quantity = parseInt(quantityInput.val());
-        var path = window.location.pathname;
+        const productId = (0, _jqueryDefault.default)(this).data("product-id");
+        const productElement = (0, _jqueryDefault.default)("#product-" + productId);
+        const cartId = (0, _jqueryDefault.default)("#carts").data("cart-id");
+        const quantityInput = (0, _jqueryDefault.default)(this).closest(".quantity-input").find(".quantity");
+        const quantity = parseInt(quantityInput.val());
+        let path = window.location.pathname;
         if (quantity > 1) {
             quantity -= 1;
             quantityInput.val(quantity);
             updatePriceItem(productElement);
-            updateTotalPrice();
         } else if (quantity === 1) {
             if (path.includes("cart")) {
                 if (confirm("Remove this product?")) (0, _jqueryDefault.default).ajax({
                     method: "POST",
                     url: "cart/remove-item",
                     data: {
-                        product_id: productId
+                        product_id: productId,
+                        cart_id: cartId
                     },
                     success: function(response) {
-                        if (response.success === 200) {
+                        if (response.status === 200) {
                             (0, _jqueryDefault.default)("#product-" + productId).remove();
                             if ((0, _jqueryDefault.default)(".list-item .item").length === 0) (0, _jqueryDefault.default)(".my-carts").html("<p>Your cart is empty. Add items to start shopping!</p>");
                         } else console.log(response);
@@ -7508,6 +7536,7 @@ function minusQuantity() {
             }
         }
     });
+    updateTotalPrice();
 }
 function plusQuantity() {
     (0, _jqueryDefault.default)(".btn-plus").on("click", function(e) {
@@ -7538,345 +7567,234 @@ function updateTotalPrice() {
         var priceText = (0, _jqueryDefault.default)(this).find(".products-price").text();
         var priceItem = parseFloat(priceText.replace(/,/g, ""));
         total += priceItem;
-        console.log(total);
     });
     (0, _jqueryDefault.default)(".purchase-final").html(total.toLocaleString());
 }
 function handleQuantityChange() {
-    (0, _jqueryDefault.default)(".quantity").on("change", function() {
-        var quantityInput = (0, _jqueryDefault.default)(this).closest(".quantity-input").find(".quantity");
-        var quantity = parseInt(quantityInput.val());
-        var product = (0, _jqueryDefault.default)(this).closest(".item");
-        if (isNaN(quantity)) (0, _jqueryDefault.default)(this).val((0, _jqueryDefault.default)(this).attr("min"));
+    const stock = parseInt((0, _jqueryDefault.default)(".quantity").attr("max"));
+    (0, _jqueryDefault.default)(".quantity").on("change blur", function() {
+        const quantityInput = (0, _jqueryDefault.default)(this).closest(".quantity-input").find(".quantity");
+        const product = (0, _jqueryDefault.default)(this).closest(".item");
+        let quantity = parseInt(quantityInput.val());
+        if (isNaN(quantity)) {
+            (0, _jqueryDefault.default)(this).val((0, _jqueryDefault.default)(this).attr("min"));
+            c;
+        }
+        if (quantity > stock) (0, _jqueryDefault.default)(this).val((0, _jqueryDefault.default)(this).attr("max"));
         updatePriceItem(product);
         updateTotalPrice();
     });
 }
 exports.default = counter;
 
-},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7kL78":[function(require,module,exports) {
+},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eCCDf":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getUserInfoFromApi", ()=>getUserInfoFromApi);
+parcelHelpers.export(exports, "getUserInfoDetail", ()=>getUserInfoDetail);
 var _jquery = require("jquery");
 var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-function showHideLabel() {
-    (0, _jqueryDefault.default)(".form-group").each(function() {
-        var label = (0, _jqueryDefault.default)(this).find("label");
-        var input = (0, _jqueryDefault.default)(this).find(".input-field");
-        var placeholderText = input.attr("placeholder");
-        input.on("focus", function() {
-            label.addClass("visible");
-            input.removeAttr("placeholder");
-        });
-        input.on("blur", function() {
-            if (!input.val()) {
-                label.removeClass("visible");
-                input.attr("placeholder", placeholderText);
-            }
-        });
-    });
-}
-exports.default = showHideLabel;
-
-},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9Jt3p":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jquery = require("jquery");
-var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-var _validatePhone = require("../components/validate/validatePhone");
-var _validateFullname = require("../components/validate/validateFullname");
-var _validatePassword = require("../components/validate/validatePassword");
-function register() {
-    validation();
-    //call api register
-    (0, _jqueryDefault.default)(".btn-signup").on("click", function(e) {
-        e.preventDefault();
-        let formData = new FormData((0, _jqueryDefault.default)("#signup-form")[0]);
+function getUserInfoFromApi() {
+    return new Promise(function(resolve, reject) {
         (0, _jqueryDefault.default).ajax({
-            method: "post",
-            url: "register",
-            data: formData,
-            contentType: false,
-            processData: false,
+            method: "get",
+            url: "get-user-info",
             success: function(response) {
-                if (response.success === 201) {
-                    const token = response.token;
-                    localStorage.setItem("authToken", token);
-                    alert(response.message);
-                    window.location.href = "/shopping";
-                } else {
-                    console.log("unsuccess");
-                    displayErrorFromApi(response.errors);
-                }
+                if (response.status === 201) resolve(response.user);
+                else reject({
+                    stauts: response.status,
+                    message: response.message
+                });
             },
-            error: function(error) {
-                console.log(error);
+            error: function(xhr) {
+                reject(xhr.responseJSON);
             }
         });
     });
 }
-function displayErrorFromApi(errors) {
-    (0, _jqueryDefault.default)("#full_name").siblings(".error-fullname").text(errors["full_name"] ?? "");
-    (0, _jqueryDefault.default)("#user_phone").siblings(".error-phone").text(errors["user_phone"] ?? "");
-    (0, _jqueryDefault.default)("#password").siblings(".error-password").text(errors["password"] ?? "");
-    (0, _jqueryDefault.default)("#repeat-password").siblings(".error-repeat-password").text(errors["repeat_password"] ?? "");
-}
-function validation() {
-    (0, _jqueryDefault.default)("#full_name").on("input blur", function() {
-        (0, _validateFullname.validateFullName)();
-    });
-    (0, _jqueryDefault.default)("#user_phone").on("input blur", function() {
-        (0, _validatePhone.validatePhone)();
-    });
-    (0, _jqueryDefault.default)("#password").on("input blur", function() {
-        (0, _validatePassword.validatePassword)();
-    });
-    (0, _jqueryDefault.default)("#repeat-password").on("input blur", function() {
-        (0, _validatePassword.validateRepeatPassword)();
-    });
-}
-exports.default = register;
-
-},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../components/validate/validatePhone":"fJj5Y","../components/validate/validateFullname":"7xBaW","../components/validate/validatePassword":"eXBn0"}],"fJj5Y":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "validatePhone", ()=>validatePhone);
-var _jquery = require("jquery");
-var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-function validatePhone() {
-    const userPhone = (0, _jqueryDefault.default)("#user_phone");
-    const regexPhone = /^0\d{9,10}$/;
-    const errorElement = userPhone.siblings(".error-phone");
-    if (userPhone.val().length === 0) {
-        errorElement.text("Phone Number is required");
-        return false;
-    } else if (!regexPhone.test(userPhone.val())) {
-        errorElement.text("Phone Number Format is incorrect");
-        return false;
-    } else {
-        errorElement.text("");
-        return true;
+let cachedUserInfo = null;
+async function getUserInfoDetail() {
+    if (cachedUserInfo) return cachedUserInfo;
+    try {
+        const userInfo = await getUserInfoFromApi();
+        cachedUserInfo = {
+            fullName: userInfo.full_name || "",
+            userPhone: userInfo.user_phone || "",
+            info: userInfo.info || {},
+            avatar: userInfo.avatar || null
+        };
+        return cachedUserInfo;
+    } catch (error) {
+        throw new Error(error);
     }
 }
 
-},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7xBaW":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "validateFullName", ()=>validateFullName);
-var _jquery = require("jquery");
-var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-function validateFullName() {
-    const regexName = /^[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸỳỵỷỹ\s]{2,}$/;
-    const fullName = (0, _jqueryDefault.default)("#full_name");
-    const errorElementFullName = fullName.siblings(".error-fullname");
-    if (fullName.val().length === 0) {
-        errorElementFullName.text("Name is required");
-        return false;
-    } else if (!regexName.test(fullName.val())) {
-        errorElementFullName.text("Name Format is incorrect");
-        return false;
-    } else {
-        errorElementFullName.text("");
-        return true;
-    }
-}
-
-},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eXBn0":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "validatePassword", ()=>validatePassword);
-parcelHelpers.export(exports, "validateRepeatPassword", ()=>validateRepeatPassword);
-var _jquery = require("jquery");
-var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-const password = (0, _jqueryDefault.default)("#password");
-const repeatPassword = (0, _jqueryDefault.default)("#repeat-password");
-const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-function validatePassword() {
-    const errorElementPassword = password.siblings(".error-password");
-    if (password.val().length === 0) {
-        errorElementPassword.text("Password is required");
-        return false;
-    } else if (!regexPassword.test(password.val())) {
-        errorElementPassword.text("Password must be at least 6 characters, include both letters and numbers");
-        return false;
-    } else {
-        errorElementPassword.text("");
-        return true;
-    }
-}
-function validateRepeatPassword() {
-    const errorElementRepeatPassword = repeatPassword.siblings(".error-repeat-password");
-    if (repeatPassword.val().length === 0) {
-        errorElementRepeatPassword.text("Password is required");
-        return false;
-    } else if (repeatPassword.val() !== password.val()) {
-        errorElementRepeatPassword.text("Passwords do not match");
-        return false;
-    } else {
-        errorElementRepeatPassword.text("");
-        return true;
-    }
-}
-
-},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4KhpK":[function(require,module,exports) {
+},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"a2Tli":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jquery = require("jquery");
 var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-var _validatePhone = require("../components/validate/validatePhone");
-var _validatePassword = require("../components/validate/validatePassword");
-function signin() {
-    validation();
-    //call api signin
-    (0, _jqueryDefault.default)(".btn-login").on("click", function(e) {
-        e.preventDefault();
-        let formData = new FormData((0, _jqueryDefault.default)("#login-form")[0]);
-        (0, _jqueryDefault.default).ajax({
-            method: "post",
-            url: "signin",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                if (typeof response === "string") response = JSON.parse(response);
-                if (response.status === 200) {
-                    alert(response.message);
-                    const token = response.token;
-                    localStorage.setItem("authToken", token);
-                    window.location.href = "/shopping";
-                } else {
-                    if (response.user_phone) (0, _jqueryDefault.default)(".error-phone").text(response.user_phone);
-                    if (response.password) (0, _jqueryDefault.default)(".error-password").text(response.password);
-                    if (response.message) {
-                        (0, _jqueryDefault.default)(".error-login").text(response.message);
-                        setTimeout(function() {
-                            (0, _jqueryDefault.default)(".error-login").text("");
-                        }, 3000);
-                    }
-                }
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    });
-}
-function validation() {
-    (0, _jqueryDefault.default)("#user_phone").on("input blur", function() {
-        (0, _validatePhone.validatePhone)();
-    });
-    (0, _jqueryDefault.default)("#password").on("input blur", function() {
-        (0, _validatePassword.validatePassword)();
-    });
-}
-exports.default = signin;
-
-},{"jquery":"hgMhh","../components/validate/validatePhone":"fJj5Y","../components/validate/validatePassword":"eXBn0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4pDUw":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jquery = require("jquery");
-var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-var _decodeUserToken = require("../jwt/decodeUserToken");
-var _decodeUserTokenDefault = parcelHelpers.interopDefault(_decodeUserToken);
-var _saveTokenFromOauth = require("../jwt/saveTokenFromOauth");
-var _saveTokenFromOauthDefault = parcelHelpers.interopDefault(_saveTokenFromOauth);
-function getInforUser() {
-    (0, _saveTokenFromOauthDefault.default)();
-    const infoUser = (0, _decodeUserTokenDefault.default)("authToken");
-    if (infoUser) {
-        const fullName = infoUser.data.full_name;
-        const nameParts = fullName.split(" ");
-        const lastName = nameParts[nameParts.length - 1];
+var _getUserInfoFromApi = require("./getUserInfoFromApi");
+async function showUserInfoInHeader() {
+    try {
+        const userInfo = await (0, _getUserInfoFromApi.getUserInfoDetail)();
+        const fullName = userInfo.fullName;
+        const lastName = fullName.split(" ").pop();
+        (0, _jqueryDefault.default)(".redirect-login").css("display", "none");
         (0, _jqueryDefault.default)(".user-info").css("display", "block");
         (0, _jqueryDefault.default)(".user-info").find(".user-name").text(lastName);
+        if (userInfo.avatar) (0, _jqueryDefault.default)("#user-icon").attr("src", userInfo.avatar);
+    } catch (xhr) {
+        console.log(xhr);
     }
 }
-exports.default = getInforUser;
+exports.default = showUserInfoInHeader;
 
-},{"../jwt/decodeUserToken":"aBXfp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","jquery":"hgMhh","../jwt/saveTokenFromOauth":"5H1F5"}],"aBXfp":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jwtDecode = require("jwt-decode");
-function decodeUserToken(key) {
-    const token = localStorage.getItem(key);
-    const decoded = (0, _jwtDecode.jwtDecode)(token);
-    return decoded;
-}
-exports.default = decodeUserToken;
+},{"./getUserInfoFromApi":"eCCDf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","jquery":"hgMhh"}],"59KRl":[function(require,module,exports) {
+module.exports = require("62018f546d8af34a")(require("3a6002a8fb20acb2").getBundleURL("ksUvU") + "home.a33d78d7.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("kcGxo"));
 
-},{"jwt-decode":"EeAxo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"EeAxo":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "InvalidTokenError", ()=>InvalidTokenError);
-parcelHelpers.export(exports, "jwtDecode", ()=>jwtDecode);
-class InvalidTokenError extends Error {
-}
-InvalidTokenError.prototype.name = "InvalidTokenError";
-function b64DecodeUnicode(str) {
-    return decodeURIComponent(atob(str).replace(/(.)/g, (m, p)=>{
-        let code = p.charCodeAt(0).toString(16).toUpperCase();
-        if (code.length < 2) code = "0" + code;
-        return "%" + code;
-    }));
-}
-function base64UrlDecode(str) {
-    let output = str.replace(/-/g, "+").replace(/_/g, "/");
-    switch(output.length % 4){
-        case 0:
-            break;
-        case 2:
-            output += "==";
-            break;
-        case 3:
-            output += "=";
-            break;
-        default:
-            throw new Error("base64 string is not of the correct length");
-    }
-    try {
-        return b64DecodeUnicode(output);
-    } catch (err) {
-        return atob(output);
-    }
-}
-function jwtDecode(token, options) {
-    if (typeof token !== "string") throw new InvalidTokenError("Invalid token specified: must be a string");
-    options || (options = {});
-    const pos = options.header === true ? 0 : 1;
-    const part = token.split(".")[pos];
-    if (typeof part !== "string") throw new InvalidTokenError(`Invalid token specified: missing part #${pos + 1}`);
-    let decoded;
-    try {
-        decoded = base64UrlDecode(part);
-    } catch (e) {
-        throw new InvalidTokenError(`Invalid token specified: invalid base64 for part #${pos + 1} (${e.message})`);
-    }
-    try {
-        return JSON.parse(decoded);
-    } catch (e) {
-        throw new InvalidTokenError(`Invalid token specified: invalid json for part #${pos + 1} (${e.message})`);
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5H1F5":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function saveTokenFromGoogle() {
-    $.ajax({
-        url: "login/redirect-google",
-        success: function(response) {
-            if (response.jwt) {
-                localStorage.setItem("authToken", response.jwt);
-                window.location.href = "/shopping";
-            } else console.log("Invalid token");
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
+},{"62018f546d8af34a":"61B45","3a6002a8fb20acb2":"lgJ39"}],"61B45":[function(require,module,exports) {
+"use strict";
+var cacheLoader = require("ca2a84f7fa4a3bb0");
+module.exports = cacheLoader(function(bundle) {
+    return new Promise(function(resolve, reject) {
+        // Don't insert the same script twice (e.g. if it was already in the HTML)
+        var existingScripts = document.getElementsByTagName("script");
+        if ([].concat(existingScripts).some(function isCurrentBundle(script) {
+            return script.src === bundle;
+        })) {
+            resolve();
+            return;
         }
+        var preloadLink = document.createElement("link");
+        preloadLink.href = bundle;
+        preloadLink.rel = "preload";
+        preloadLink.as = "script";
+        document.head.appendChild(preloadLink);
+        var script = document.createElement("script");
+        script.async = true;
+        script.type = "text/javascript";
+        script.src = bundle;
+        script.onerror = function(e) {
+            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
+            script.onerror = script.onload = null;
+            script.remove();
+            reject(error);
+        };
+        script.onload = function() {
+            script.onerror = script.onload = null;
+            resolve();
+        };
+        document.getElementsByTagName("head")[0].appendChild(script);
     });
-}
-exports.default = saveTokenFromGoogle;
+});
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["fQFrJ","1Z4Rq"], "1Z4Rq", "parcelRequire94c2")
+},{"ca2a84f7fa4a3bb0":"j49pS"}],"j49pS":[function(require,module,exports) {
+"use strict";
+var cachedBundles = {};
+var cachedPreloads = {};
+var cachedPrefetches = {};
+function getCache(type) {
+    switch(type){
+        case "preload":
+            return cachedPreloads;
+        case "prefetch":
+            return cachedPrefetches;
+        default:
+            return cachedBundles;
+    }
+}
+module.exports = function(loader, type) {
+    return function(bundle) {
+        var cache = getCache(type);
+        if (cache[bundle]) return cache[bundle];
+        return cache[bundle] = loader.apply(null, arguments).catch(function(e) {
+            delete cache[bundle];
+            throw e;
+        });
+    };
+};
+
+},{}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+}
+// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"l7mZf":[function(require,module,exports) {
+module.exports = require("3cc67fb17ecae0c2")(require("c5c854e8fe8813e0").getBundleURL("ksUvU") + "productDetail.2f321eef.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("2EYFx"));
+
+},{"3cc67fb17ecae0c2":"61B45","c5c854e8fe8813e0":"lgJ39"}],"149va":[function(require,module,exports) {
+module.exports = require("21acb8b1cc32eef5")(require("23d713b9871e8193").getBundleURL("ksUvU") + "carts.c1f444f9.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("5bBZY"));
+
+},{"21acb8b1cc32eef5":"61B45","23d713b9871e8193":"lgJ39"}],"ijFbk":[function(require,module,exports) {
+module.exports = require("2cda7b064f75920d")(require("86179498f7af5fe7").getBundleURL("ksUvU") + "signup.845d266a.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("1Njdq"));
+
+},{"2cda7b064f75920d":"61B45","86179498f7af5fe7":"lgJ39"}],"f5dOO":[function(require,module,exports) {
+module.exports = require("e24d95f67a76e9ad")(require("87689f9d420e68eb").getBundleURL("ksUvU") + "login.3a79a418.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("2GSzE"));
+
+},{"e24d95f67a76e9ad":"61B45","87689f9d420e68eb":"lgJ39"}],"1a7NQ":[function(require,module,exports) {
+module.exports = require("71c088c801c9740c")(require("c11cb19f7f868fa1").getBundleURL("ksUvU") + "checkout.7d2c7e20.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("hB9bE"));
+
+},{"71c088c801c9740c":"61B45","c11cb19f7f868fa1":"lgJ39"}],"246Ix":[function(require,module,exports) {
+module.exports = require("9ebd6ba50271dd7e")(require("7faa6db0a8e5feb5").getBundleURL("ksUvU") + "thanks.40e53d12.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("5NMyH"));
+
+},{"9ebd6ba50271dd7e":"61B45","7faa6db0a8e5feb5":"lgJ39"}],"eGyJT":[function(require,module,exports) {
+module.exports = require("3d593fd8fadc9ae0")(require("8679f5447b7f3964").getBundleURL("ksUvU") + "complete-profile.3ed9ff5f.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("k1bPo"));
+
+},{"3d593fd8fadc9ae0":"61B45","8679f5447b7f3964":"lgJ39"}]},["fQFrJ","1Z4Rq"], "1Z4Rq", "parcelRequire94c2")
 
 //# sourceMappingURL=index.js.map

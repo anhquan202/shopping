@@ -150,8 +150,9 @@ class AuthController
       header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
       exit();
     }
+
     $result = $this->userModel->authWithGoogle($data);
-    if (isset($result['status']) && $result['status'] === 200 && isset($result['user_id'])) {
+    if (isset($result['status']) && $result['status'] === 200 && $result['user_phone'] !== '') {
       setcookie(
         'auth_token',
         $result['token'],

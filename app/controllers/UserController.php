@@ -40,7 +40,7 @@ class UserController
             ]
           );
           $data = $_SESSION['tempo_user_info'];
-          $result = $this->userModel->authWithGoogle($data);
+          $result = $this->userModel->authWithGoogle($data, $user_phone);
           if (isset($result['status']) && $result['status'] === 201) {
             setcookie(
               'auth_token',
